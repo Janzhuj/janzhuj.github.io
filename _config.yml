@@ -1,9 +1,9 @@
 # Site wide configuration
 
-title:            Susan Li | Data Ninja
-locale:           en_US
-baseurl:          https://susanli2016.github.io
-url: 		      https://susanli2016.github.io
+title:            Juan Zhu | Data Ninja
+locale:           OR_US
+baseurl:          https://janzhuj.github.io/
+url: 		      https://janzhuj.github.io/
 
 # Jekyll configuration
 
@@ -41,18 +41,18 @@ titlecase: true
 
 # Site owner
 owner:
-  name: Susan Li
+  name: Juan Zhu
   avatar: bio-photo-2.jpg
-  bio: Data Analyst works in an AI company. 
+  bio:  
   email: #username
-  disqus-shortname: susanli2016
-  twitter: attractchinese
+  disqus-shortname: JuanZhu
+  twitter: #username
   facebook: #username
   google: #username 
   bing-verify: 
-  github: susanli2016
+  github: Janzhuj
   stackoverflow: #http://stackoverflow.com/users/123456/username
-  linkedin: susanli
+  linkedin: juan-zhu-217a13161
   xing: #username
   instagram: #username
   lastfm: #username
