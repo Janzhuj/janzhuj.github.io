@@ -59,7 +59,17 @@ plot_na_pareto(df)
 {% endhighlight %}
 
 {% highlight text %}
-## Number of missing value: 136534 
+##      region   value Number of missing value: 136534
+##1    alabama  4777326
+##2     alaska   711139
+##3    arizona  6410979
+##4   arkansas  2916372
+##5 california 37325068
+##6   colorado  5042853
+{% endhighlight %}
+
+{% highlight text %}
+##   Number of missing value: 136534 
 {% endhighlight %}
 
 ![Rplot-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-1.png)
