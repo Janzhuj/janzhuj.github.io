@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Online Customer Segmentation"
+title: "Online Store Customer Segmentation"
 excerpt: "Clustering, RFM Analysis, R"
 tags: [rstats]
 share: true
@@ -44,20 +44,25 @@ n_distinct(df$Description)
 n_distinct(df$Country)
 {% endhighlight %}
 
-### So, what are the top causes of death in the United States?
+The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
+
+# Data Preparation
+
+## Data Cleaning
+
+### Deal with the missing values
 
 
 {% highlight r %}
-library(ggplot2)
-library(ggthemes)
-ggplot(aes(x = reorder(Cause,-Deaths), y = Deaths), data = df) + 
-  geom_bar(stat = 'identity') +
-  ylab('Total Deaths') +
-  xlab('') +
-  ggtitle('Causes of Deaths') +
-  theme_tufte() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+cat("Number of missing value:", sum(is.na(df)), "\n")
+plot_na_pareto(df)
 {% endhighlight %}
+
+{% highlight text %}
+## Number of missing value: 136534 
+{% endhighlight %}
+
+![Rplot-2](/figs/2017-03-25-Causes-of-Death/Rplot-2.png)
 
 
 Heart disease and cancer are far away the most important causes of death in the US. Let?s take these top 10 causes of death and make a new data frame for some plotting, as follows:
