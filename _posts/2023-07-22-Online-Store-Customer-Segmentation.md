@@ -120,19 +120,5 @@ df %>%
 
 
 {% highlight r%}
-library(dplyr)
-cause_group <- group_by(df, Cause)
-df.death_by_cause <- summarize(cause_group, 
-                               sum = sum(Deaths))
-df.death_by_cause <- arrange(df.death_by_cause, desc(sum))
-top_10 <- head(df.death_by_cause, 10)
-top_10
-ggplot(aes(x = reorder(Cause, sum), y = sum), data = top_10) +
-  geom_bar(stat = 'identity') +
-  theme_tufte() +
-  theme(axis.text = element_text(size = 12, face = 'bold')) +
-  coord_flip() +
-  xlab('') +
-  ylab('Total Deaths') +
-  ggtitle("Top 10 Causes of Death")
+
 {% endhighlight %}
