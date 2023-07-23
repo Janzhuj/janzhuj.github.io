@@ -58,7 +58,7 @@ plot_na_pareto(df)
 {% endhighlight %}
 
 {% highlight text %}
-##   Number of missing value: 136534 
+Number of missing value: 136534 
 {% endhighlight %}
 
 ![Rplot-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-1.png)
