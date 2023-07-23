@@ -7,22 +7,45 @@ share: true
 comments: true
 ---
 
-In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy
-based on the specific segments. I will be using a widely known data set from UCI Machine Learning Repository (https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
+In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy based on the specific segments. I will be using a widely known data set from [UCI Machine Learning Repository] (https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
+
+First let’s load the required packages.
 
 {% highlight r %}
-url_causes <- "https://ibm.box.com/shared/static/souzhfxe3up2hrh23phciz18pznbtqxp.csv"
-
-df <- read.csv(url_causes)
-unique(df$Cause)
-sum(df$Deaths)
-unique(df$Year)
-unique(df$Gender)
-unique(df$Age)
-df[!complete.cases(df), ]
+library(tidyverse)  
+library(readxl) 
+library(kableExtra)
+library(flextable)
+library(DataExplorer) 
+library(dlookr) 
+library(highcharter) 
+library(tm) 
+library(wordcloud)
+library(corrplot) 
+library(viridis) 
+library(xts)
+library(rfm) 
+library(hopkins) 
+library(factoextra)
+library(NbClust)  
+library(clValid)
+library(fpc) 
 {% endhighlight %}
 
-This mortality data contains 51 causes and 6540835 deaths for the year 2005, 2010 and 2015. The gender are male and female, and the age from 0 to 100. And there is no missing value in the dateset.
+Load the dataset and take a quick look.
+
+{% highlight r %}
+df<-read_excel("D:/work/job/prepare/cluster/Online_Retail.xlsx")
+view(df)
+# Unique customers, products and country
+n_distinct(df$CustomerID)
+n_distinct(df$Description)
+n_distinct(df$Country)
+# Data Structure
+str(df)
+# Summary of data set
+summary(df) %>% kable() %>% kable_styling()
+{% endhighlight %}
 
 ### So, what are the top causes of death in the United States?
 
