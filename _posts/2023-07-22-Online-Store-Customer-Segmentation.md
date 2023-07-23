@@ -119,6 +119,20 @@ df %>%
 {% endhighlight %}
 
 
-{% highlight r%}
 
+
+
+
+{% highlight r%}
+# Find the original Orders with the same customerID, product description, country as the canceled orders
+orignal_info <- order_canceled %>%
+  subset(select = -c(InvoiceNo, InvoiceDate)) %>%
+  mutate(Quantity  = Quantity *(-1))
+# Remove the original Order that will be canceled 
+df<- anti_join(df, orignal_info)
+# filter all canceled orders , as well as the rows where the UnitPrice is 0 .
+df <- df %>% 
+  filter(Quantity > 0) %>% 
+  filter(UnitPrice >0) 
+plot_outlier(df, Quantity, UnitPrice)
 {% endhighlight %}
