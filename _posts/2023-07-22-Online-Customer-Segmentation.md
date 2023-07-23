@@ -35,16 +35,13 @@ library(fpc)
 Load the dataset and take a quick look.
 
 {% highlight r %}
-df<-read_excel("D:/work/job/prepare/cluster/Online_Retail.xlsx")
-view(df)
-# Unique customers, products and country
-n_distinct(df$CustomerID)
+df<-read_excel("Online_Retail.xlsx")
+head(df,5)
+str(df)
+summary(df) %>% kable() %>% kable_styling()
+n_distinct(df$CustomerID) 
 n_distinct(df$Description)
 n_distinct(df$Country)
-# Data Structure
-str(df)
-# Summary of data set
-summary(df) %>% kable() %>% kable_styling()
 {% endhighlight %}
 
 ### So, what are the top causes of death in the United States?
