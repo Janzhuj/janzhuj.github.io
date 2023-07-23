@@ -52,20 +52,9 @@ The dataset consists of 541,909 rows and 8 features. Most of features have corre
 
 ### Deal with the missing values
 
-
 {% highlight r %}
 cat("Number of missing value:", sum(is.na(df)), "\n")
 plot_na_pareto(df)
-{% endhighlight %}
-
-{% highlight text %}
-##      region   value Number of missing value: 136534
-##1    alabama  4777326
-##2     alaska   711139
-##3    arizona  6410979
-##4   arkansas  2916372
-##5 california 37325068
-##6   colorado  5042853
 {% endhighlight %}
 
 {% highlight text %}
