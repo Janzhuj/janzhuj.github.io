@@ -46,11 +46,11 @@ n_distinct(df$Country)
 
 The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
 
-# Data Preparation
+## Data Preparation
 
-## Data Cleaning
+### Data Cleaning
 
-### Deal with the missing values
+Let's check and deal with missing values.
 
 {% highlight r %}
 cat("Number of missing value:", sum(is.na(df)), "\n")
