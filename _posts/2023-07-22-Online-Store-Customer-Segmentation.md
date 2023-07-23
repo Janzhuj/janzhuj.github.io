@@ -63,8 +63,7 @@ Number of missing value: 136534
 
 ![Rplot-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-1.png)
 
-We find that there are 25 percent of CustomerIDs missing, and a very small percentage of Descriptions missing from the data. CustomerID can not be empty for customer segmentation analysis, and at the same time, the dataset is rich enough for serving our purpose, so we will remove the rows with missing CustomerID from the data.
-For the NAs on description we will replace them with an empty string value.
+We find that there are 25 percent of CustomerIDs missing, and a very small percentage of Descriptions missing from the data. CustomerID can not be empty for customer segmentation analysis, and at the same time, the dataset is rich enough for serving our purpose, so we will remove the rows with missing CustomerID from the data. For the NAs on description we will replace them with an empty string value.
 
 {% highlight r %}
 df<-df %>%
@@ -90,7 +89,7 @@ Check minimum UnitPrice
 min(df$UnitPrice)
 {% endhighlight %}
 
-From the plots we can see that there are some negative values in the quantity, which are canceled transactions. Before we remove them, we need find out the original transactions, and remove both negative transactions and  their positive counterparts.
+From the plots we can see that there are some negative values in the quantity, which are canceled transactions. Before we remove them, we need find out the original transactions, and then remove both negative transactions and  their positive counterparts.
 
 Check canceled orders. 
 {% highlight r %}
