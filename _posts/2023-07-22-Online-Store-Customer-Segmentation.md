@@ -62,7 +62,7 @@ plot_na_pareto(df)
 ## Number of missing value: 136534 
 {% endhighlight %}
 
-![Rplot-2](/figs/2017-03-25-Causes-of-Death/Rplot-2.png)
+![Rplot-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-1.png)
 
 
 Heart disease and cancer are far away the most important causes of death in the US. Let?s take these top 10 causes of death and make a new data frame for some plotting, as follows:
