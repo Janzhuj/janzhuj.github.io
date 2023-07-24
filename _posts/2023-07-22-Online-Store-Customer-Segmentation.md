@@ -387,3 +387,81 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 ![Rplot-18](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-18.png)
 
 #### The mainly products offered by the online store are decoration products, Christmas related products, bags, flowers and presents.
+
+## Customer Segmentation &  RFM analysis & Clustering 
+
+### Create RFM Features
+Recency: how recently did customers purchase or How much time has elapsed between the last purchase date and the reference date?
+Frequency: How often do customers visit or how often do they purchase?
+Monetary: How much sales we get from their visit or how much do they spend when they purchase? 
+
+{% highlight r %}
+custormer_info <- df %>%
+  select("InvoiceNo","InvoiceDate","CustomerID","sales") %>%
+  mutate(days=as.numeric(max(df$date)-as.numeric(df$date))+1) %>%
+  group_by(CustomerID) %>%
+  summarise(Recency = min(days), Frequency = n_distinct(InvoiceNo), Monetary = round(sum(sales),0))  %>% 
+  ungroup()
+dim(custormer_info)
+summary(custormer_info) 
+head(custormer_info,2)
+{% endhighlight %}
+
+{% highlight text %}
+[1] 4325    4
+
+# A tibble: 2 × 4
+  CustomerID Recency Frequency Monetary
+       <dbl>   <dbl>     <int>    <dbl>
+1      12347       3         7     4310
+2      12348      76         4     1797
+
+   CustomerID       Recency         Frequency          Monetary     
+ Min.   :12347   Min.   :  1.00   Min.   :  1.000   Min.   :     3  
+ 1st Qu.:13816   1st Qu.: 18.00   1st Qu.:  1.000   1st Qu.:   306  
+ Median :15301   Median : 51.00   Median :  2.000   Median :   664  
+ Mean   :15302   Mean   : 93.46   Mean   :  4.227   Mean   :  1941  
+ 3rd Qu.:16778   3rd Qu.:144.00   3rd Qu.:  5.000   3rd Qu.:  1626  
+ Max.   :18287   Max.   :374.00   Max.   :205.000   Max.   :278953  
+{% endhighlight %}
+
+{% highlight r %}
+# Check the distributions, outliers, and correlations of RFM features
+diagnose_outlier(custormer_info) %>% flextable()
+plot_outlier(custormer_info, Recency, Frequency, Monetary)
+check_Cor <- custormer_info %>% select("Recency", "Frequency", "Monetary")
+corrplot(cor(check_Cor), 
+         type = "upper", method = "ellipse", tl.cex = 0.9)
+{% endhighlight %}
+
+![Rplot-22](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-22.png)
+
+![Rplot-23](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-23.png)
+
+![Rplot-24](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-24.png)
+
+![Rplot-25](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-25.png)
+
+![Rplot-26](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-26.png)
+
+{% highlight r %}
+# Feature Scale
+rfm_Scaled <- scale( select(custormer_info, -"CustomerID"))
+rownames(rfm_Scaled) <- custormer_info$CustomerID
+summary(rfm_Scaled)
+head(rfm_Scaled,2)
+{% endhighlight %}
+
+{% highlight text %}
+    Recency          Frequency          Monetary       
+ Min.   :-0.9217   Min.   :-0.4270   Min.   :-0.23428  
+ 1st Qu.:-0.7522   1st Qu.:-0.4270   1st Qu.:-0.19764  
+ Median :-0.4233   Median :-0.2947   Median :-0.15436  
+ Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.00000  
+ 3rd Qu.: 0.5038   3rd Qu.: 0.1024   3rd Qu.:-0.03804  
+ Max.   : 2.7965   Max.   :26.5698   Max.   :33.49366  
+
+         Recency   Frequency    Monetary
+12347 -0.9017486  0.36702571  0.28648198
+12348 -0.1740543 -0.02998626 -0.01736572
+> {% endhighlight %}
