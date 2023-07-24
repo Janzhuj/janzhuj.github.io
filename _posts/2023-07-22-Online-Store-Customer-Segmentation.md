@@ -468,7 +468,7 @@ head(rfm_Scaled,2)
 12348 -0.1740543 -0.02998626 -0.01736572
 {% endhighlight %}
 
-### cluster validation: 
+### Cluster Validation: 
 
 #### Step one, assess the clustering tendency to see if applying clustering is suitable for the data.
 
