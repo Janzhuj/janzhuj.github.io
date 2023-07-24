@@ -464,7 +464,7 @@ head(rfm_Scaled,2)
          Recency   Frequency    Monetary
 12347 -0.9017486  0.36702571  0.28648198
 12348 -0.1740543 -0.02998626 -0.01736572
-> {% endhighlight %}
+{% endhighlight %}
 
 ### cluster validation: 
 
