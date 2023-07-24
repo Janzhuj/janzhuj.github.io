@@ -444,6 +444,8 @@ corrplot(cor(check_Cor),
 
 ![Rplot-26](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-26.png)
 
+#### Recency has negative corelation with Frequency and Monetary, while Frequency has positive correlation with Monetary.
+
 {% highlight r %}
 # Feature Scale
 rfm_Scaled <- scale( select(custormer_info, -"CustomerID"))
