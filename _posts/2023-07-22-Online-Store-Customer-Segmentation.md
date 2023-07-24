@@ -298,3 +298,92 @@ highchart(type = "stock") %>%
 
 ![Rplot-12](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-12.png)
 
+#### We can see a steady increase in sales over time for the retail store with a peak on September 20.
+
+{% highlight r %}
+# Observe transaction and sales patterns
+# Sales by Day of Week
+df %>%
+  group_by(day_week) %>%
+  summarise(sales = sum(sales))  %>% 
+  ungroup()%>%
+  hchart(type = 'column', hcaes(x = day_week, y = sales)) %>% 
+  hc_yAxis(title = list(text = "Sales")) %>%  
+  hc_xAxis(title = list(text = "Day of the Week")) %>% 
+  hc_title(text = "Sales by Day of Week")
+
+# Transaction by Day of Week
+df %>%
+  group_by(day_week) %>%
+  summarise(Transaction = n_distinct(InvoiceNo))  %>% 
+  ungroup() %>%
+  hchart(type = 'column', hcaes(x = day_week, y = Transaction)) %>% 
+  hc_yAxis(title = list(text = "Transaction")) %>%  
+  hc_xAxis(title = list(text = "Day of the Week")) %>% 
+  hc_title(text = "Transaction by Day of Week")
+
+# Sales by Hour of The Day
+df %>%
+  group_by(hour) %>%
+  summarise(sales = sum(sales)) %>% 
+  ungroup() %>%
+  hchart(type = 'column', hcaes(x = hour, y = sales)) %>% 
+  hc_yAxis(title = list(text = "Sales")) %>%  
+  hc_xAxis(title = list(text = "Hour of the Day")) %>% 
+  hc_title(text = "Sales by Hour of The Day")
+
+# Transaction by Hour of The Day
+df %>%
+  group_by(hour) %>%
+  summarise(Transaction = n_distinct(InvoiceNo))  %>% 
+  ungroup() %>%
+  hchart(type = 'column', hcaes(x = hour, y = Transaction)) %>% 
+  hc_yAxis(title = list(text = "Transaction")) %>%  
+  hc_xAxis(title = list(text = "Hour of the Day")) %>% 
+  hc_title(text = "Transaction by Hour of The Day")
+{% endhighlight %}
+
+![Rplot-14](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-14.png)
+![Rplot-15](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-15.png)
+![Rplot-16](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-16.png)
+![Rplot-17](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-17.png)
+
+#### By observing transaction and sales patterns, we find that the peek hours of the day in the online store are from 10 am to 15 pm, and Thursday is the busiest day.
+
+{% highlight r %}
+# Analysis products  categories by extracting and cleaning the text information
+# Unique product 
+products_list <- unique(df$Description)
+docs <- Corpus(VectorSource(products_list))
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+docs <- tm_map(docs, toSpace, "/")
+docs <- tm_map(docs, toSpace, "@")
+docs <- tm_map(docs, toSpace, "\\|")
+# Convert the text to lower case
+docs <- tm_map(docs, content_transformer(tolower))
+# Remove numbers
+docs <- tm_map(docs, removeNumbers)
+# Remove English common stop words
+docs <- tm_map(docs, removeWords, stopwords("english"))
+# Remove your own stop word
+# specify your stop words as a character vector like color, texture，size, etc.
+docs <- tm_map(docs, removeWords, c("pink", "blue","red","set","white","black","sign","ivory","cover","hanging","wall","green","metal","vintage","heart", "paper", "silver", "glass","large","small","holder"))
+# Remove punctuations
+docs <- tm_map(docs, removePunctuation)
+# Eliminate extra white spaces
+docs <- tm_map(docs, stripWhitespace)
+
+dtm <- TermDocumentMatrix(docs)
+m <- as.matrix(dtm)
+v <- sort(rowSums(m),decreasing=TRUE)
+d <- data.frame(word = names(v),freq=v)
+# Explore the 20 most common words from product Descriptions,
+set.seed(1234)
+wordcloud(words = d$word, freq = d$freq, min.freq = 1,
+          max.words=20, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+{% endhighlight %}
+
+![Rplot-18](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-18.png)
+
+#### The mainly products offered by the online store are decoration products, Christmas related products, Bags, Flowers and presents
