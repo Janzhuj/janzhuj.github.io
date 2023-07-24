@@ -468,7 +468,7 @@ head(rfm_Scaled,2)
 
 ### cluster validation: 
 
-#### Step one, Assess the clustering tendency to see if applying clustering is suitable for the data.
+#### Step one, assess the clustering tendency to see if applying clustering is suitable for the data.
 
 {% highlight r %}
 # Compute Hopkins statistic for rfm_scaled dataset
@@ -478,6 +478,6 @@ hopkins(rfm_Scaled, n = nrow(rfm_Scaled)-1)
 
 #### The H value = $H 0.007978077 which is far below the threshold 0.05. Then we can reject the null hypothesis and conclude that the data set is significantly a clusterable data.
 
-#### Step two, Use Cluster validation statistics to evaluate the goodness of the clustering results, choose the best algorithm and the optimal number of clusters
+#### Step two, use Cluster validation statistics to evaluate the goodness of the clustering results, choose the best algorithm and the optimal number of clusters
 
 
