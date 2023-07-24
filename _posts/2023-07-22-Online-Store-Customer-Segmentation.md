@@ -91,9 +91,8 @@ min(df$UnitPrice)
 
 From the plots we can see that there are some negative values in the quantity, which are canceled transactions. Before we remove them, we need find out the original transactions, and then remove both negative transactions and  their positive counterparts.
 
-Check canceled orders.
-
 {% highlight r %}
+# Find canceled orders.
 order_canceled <- df %>%
   filter(Quantity<0) %>%
   arrange(Quantity)
@@ -119,7 +118,7 @@ df %>%
 {% endhighlight %}
 
 {% highlight r%}
-# Find the original Orders with the same customerID, product description, country as the canceled orders
+# We can Find the original Orders by selecting the same customer ID, product description, country and quantity as those in the canceled orders.
 orignal_info <- order_canceled %>%
   subset(select = -c(InvoiceNo, InvoiceDate)) %>%
   mutate(Quantity  = Quantity *(-1))
