@@ -25,7 +25,7 @@ library(corrplot)
 library(viridis) 
 library(xts)
 library(rfm) 
-library(hopkins) 
+library(clustertend) 
 library(factoextra)
 library(NbClust)  
 library(clValid)
@@ -460,8 +460,24 @@ head(rfm_Scaled,2)
  Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.00000  
  3rd Qu.: 0.5038   3rd Qu.: 0.1024   3rd Qu.:-0.03804  
  Max.   : 2.7965   Max.   :26.5698   Max.   :33.49366  
-
+ 
          Recency   Frequency    Monetary
 12347 -0.9017486  0.36702571  0.28648198
 12348 -0.1740543 -0.02998626 -0.01736572
 > {% endhighlight %}
+
+### cluster validation: 
+
+#### Step one, Assess the clustering tendency to see if applying clustering is suitable for the data.
+
+{% highlight r %}
+# Compute Hopkins statistic for rfm_scaled dataset
+set.seed(123)
+hopkins(rfm_Scaled, n = nrow(rfm_Scaled)-1)
+{% endhighlight %}
+
+#### The H value = $H 0.007978077 which is far below the threshold 0.05. Then we can reject the null hypothesis and conclude that the data set is significantly a clusterable data.
+
+#### Step two, Use Cluster validation statistics to evaluate the goodness of the clustering results, choose the best algorithm and the optimal number of clusters
+
+
