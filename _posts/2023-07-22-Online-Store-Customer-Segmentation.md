@@ -84,9 +84,8 @@ plot_outlier(df,Quantity, UnitPrice)
 
 ![Rplot-4](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-4.png)
 
-Check minimum UnitPrice
-
 {% highlight r %}
+# Check minimum UnitPrice
 min(df$UnitPrice)
 {% endhighlight %}
 
