@@ -386,4 +386,4 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 1,
 
 ![Rplot-18](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-18.png)
 
-#### The mainly products offered by the online store are decoration products, Christmas related products, Bags, Flowers and presents
+#### The mainly products offered by the online store are decoration products, Christmas related products, bags, flowers and presents.
