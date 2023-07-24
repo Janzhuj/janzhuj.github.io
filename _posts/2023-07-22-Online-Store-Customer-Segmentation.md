@@ -171,9 +171,8 @@ df$day_week <- wday(df$date, label = TRUE)
 
 ## Exploratory Data Analysis
 
-Take a look of the transactions in each county
-
 {% highlight r %}
+# Take a look of the transactions in each county
 bar <- ggplot(data = df) + 
   geom_bar(
     mapping = aes(x = Country, fill = Country), 
@@ -185,8 +184,6 @@ bar <- ggplot(data = df) +
 bar + coord_flip()
 bar + coord_polar()
 {% endhighlight %}
-
-We can see that the most of the orders come from the UK. To get a better look of the transactions that happened outside the UK, we will plot invoices excluding UK this time and lets arange it also in a descending order.
 
 {% highlight r %}
 T_excludeUK <- df %>% 
@@ -207,9 +204,10 @@ bar + coord_polar()
 
 ![Rplot-9-2](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-9-2.png)
 
-Take a look of the sales in each county
+#### We can see that the most of the orders come from the UK. To get a better look of the transactions that happened outside the UK, we will plot invoices excluding UK this time and lets arange it also in a descending order.
 
 {% highlight r %}
+# Take a look of the sales in each county
 Sales_country <- df %>%
   group_by(Country) %>%
   summarize(sales = round(sum(sales),0), transcations=n_distinct(InvoiceNo),customers = n_distinct(CustomerID))  %>% 
@@ -230,9 +228,9 @@ highchart(type = "map") %>%
 
 ![Rplot-10](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-10.png)
 
-Top 10 sales with their transactions by country excluding UK 
 
 {% highlight r %}
+#Top 10 sales with their transactions by country excluding UK 
 Top_10_exclUK <- Sales_country %>%
   filter(Country != "United Kingdom") %>%
   top_n(10,sales)
@@ -255,9 +253,8 @@ highchart() %>%
 
 #### We can see that the orders of the online store come mainly from the UK, and the next top 5 countries by sales with descending order are Netherlands,EIRE (Ireland), Germany, France and Australia.
 
-Top 5 sales by country excluding UK over time
-
 {% highlight r %}
+#Top 5 sales by country excluding UK over time
 top_5 <- df %>%
   filter(Country == 'Netherlands' | Country == 'EIRE' | Country == 'Germany' | Country == 'France' 
          | Country == 'Australia') %>%
@@ -280,11 +277,11 @@ ggplot(top_5, aes(x = date, y = sales, colour = Country)) + geom_smooth(method =
 {% endhighlight %}
   
 ![Rplot-13](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-13.png)
-We observe that the Netherlands and Australia had a sharp drop in sales after the summer of 2021.
 
-Take a look of the total sales by date 
+#### We observe that the Netherlands and Australia had a sharp drop in sales after the summer of 2021.
 
 {% highlight r %}
+# Take a look of the total sales by date 
 Sales_date <- df %>%
   group_by(date) %>%
   summarise(sales = sum(sales)) %>% 
