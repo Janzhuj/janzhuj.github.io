@@ -515,3 +515,60 @@ Connectivity 4.6496 hierarchical 2
 Dunn         0.3309 hierarchical 5       
 Silhouette   0.9450 hierarchical 2       
 {% endhighlight %}
+
+#### It can be seen that hierarchical clustering performs the best in each case, and the optimal number of clusters seems to be two using the Connectivity and Silhouette measures, and five using the Dunn measure.
+
+Next, the stability measures can be computed as follow:
+
+{% highlight r %}
+stab <- clValid(rfm_Scaled, nClust = 2:6, clMethods = clmethods,
+                validation = "stability", maxitems=nrow(rfm_Scaled))
+# Display only optimal Scores
+optimalScores(stab)
+{% endhighlight %}
+
+{% highlight text %}
+           Score       Method Clusters
+APN 0.0008468928 hierarchical        2
+AD  0.8419747548          pam        6
+ADM 0.0214144821 hierarchical        2
+FOM 0.8562296447       kmeans        6
+{% endhighlight %}
+
+#### The values of APN, ADM and FOM ranges from 0 to 1, AD has a value between 0 and infinity, and smaller values are  preferred. For the APN and ADM measures, hierarchical clustering with two clusters again gives the best score. For AD measure, PAM with six clusters has the best. For FOM measure, Kmeans with six clusters has the best score.
+
+Determine the optimal number of clusters for K-means clustering. The NbClust package provides 30 indices for choosing the best number of clusters
+
+{% highlight r %}
+nb <- NbClust(rfm_Scaled, distance = "euclidean", min.nc = 2,
+              max.nc = 10, method = "kmeans")
+fviz_nbclust(nb)
+{% highlight r %}
+
+{% highlight text %}
+Among all indices: 
+===================
+* 2 proposed  0 as the best number of clusters
+* 1 proposed  1 as the best number of clusters
+* 3 proposed  2 as the best number of clusters
+* 7 proposed  3 as the best number of clusters
+* 4 proposed  4 as the best number of clusters
+* 1 proposed  5 as the best number of clusters
+* 2 proposed  6 as the best number of clusters
+* 2 proposed  7 as the best number of clusters
+* 2 proposed  8 as the best number of clusters
+* 1 proposed  9 as the best number of clusters
+* 1 proposed  10 as the best number of clusters
+Conclusion
+=========================
+* According to the majority rule, the best number of clusters is  3 .
+{% highlight r %}
+
+![Rplot-34-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-34-1.png)
+
+![Rplot-34-2](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-34-2.png)
+
+![Rplot-33](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-33.png)
+
+####  According to the majority rule, the best number of clusters for K-means clustering algorithm is  3.
+
