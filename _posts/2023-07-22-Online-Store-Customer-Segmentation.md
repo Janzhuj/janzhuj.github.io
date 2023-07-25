@@ -683,3 +683,47 @@ head(rfm_segments,5)
 4       12350          311                 1    334             1               1              2       112 Lost          
 5       12352           37                 6   1405             3               5              4       354 Loyal Customer
 {% endhighlight %}
+
+#### check segments threshold and size
+
+{% highlight r %}
+segments_summary<-rfm_segments %>%
+  group_by(segment) %>% 
+  summarise(counts=n())  %>% 
+  ungroup() %>%
+  arrange(-counts) 
+rfm_score$threshold
+head(segments_summary, 8)
+{% endhighlight %}
+
+{% highlight text %}
+# A tibble: 5 × 6
+  recency_lower recency_upper frequency_lower frequency_upper monetary_lower monetary_upper
+          <dbl>         <dbl>           <dbl>           <dbl>          <dbl>          <dbl>
+1             1            16               1               2             3            249 
+2            16            34               2               3           249            487 
+3            34            73               3               4           487            923 
+4            73           182               4               6           923           2029.
+5           182           375               6             206          2029.        278954 
+
+# A tibble: 8 × 2
+  segment            counts
+  <chr>               <int>
+1 Lost                 1029
+2 Potential Loyalist    932
+3 Champion              902
+4 Loyal Customer        892
+5 About to Sleep        281
+6 Need Attention        173
+7 At Risk                62
+8 Hibernating            54
+{% endhighlight %}
+
+{% highlight r %}
+fig1<-rfm_plot_median_recency(rfm_segments)
+fig2<-rfm_plot_median_frequency(rfm_segments)
+fig3<-rfm_plot_median_monetary(rfm_segments)
+plot_grid(fig1, fig2, fig3)
+{% endhighlight %}
+
+![Rplot-40](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-40.png)
