@@ -640,7 +640,7 @@ f2<-ggplot(rfm_df, aes(x = cluster, y = Frequency)) +
   geom_boxplot(aes(fill = cluster))
 f3<-ggplot(rfm_df, aes(x = cluster, y = Monetary)) + 
   geom_boxplot(aes(fill = cluster))
-plot_grid(f1, f2, f3, ncol=3)
+plot_grid(f1, f2, f3)
 
 # Parallel coordiante plots allow us to put each feature on seperate column and lines connecting each column
 ggparcoord(data = rfm_df, columns = 1:3, groupColumn = 4, alphaLines = 0.4, title = "Parallel Coordinate Plot for the rfm Data", scale = "globalminmax", showPoints = TRUE) + theme(legend.position = "bottom")
@@ -648,6 +648,38 @@ ggparcoord(data = rfm_df, columns = 1:3, groupColumn = 4, alphaLines = 0.4, titl
 
 ![Rplot-37](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-37.png)
 
-![Rplot-38-0](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-38-0.png)
+![Rplot-38-0](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-38.png)
 
 ![Rplot-39](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-39.png)
+
+#### RFM analysis
+
+{% highlight r %}
+rfm_score <- rfm_table_customer(data=rfm_k3, customer_id=CustomerID, n_transactions=Frequency, recency_days=Recency,  total_revenue=Monetary,recency_bins = 5,frequency_bins =5, monetary_bins = 5)
+rfm_details<-rfm_score$rfm
+
+rfm_segments <- rfm_details %>% 
+  mutate(segment = ifelse(recency_score >= 4 & frequency_score >= 4 & monetary_score >= 4, "Champion", 
+                          ifelse(recency_score >= 2 & frequency_score >= 3 & monetary_score >= 3, "Loyal Customer", 
+                                 ifelse(recency_score >= 3 & frequency_score <= 3 & monetary_score <= 3, "Potential Loyalist",
+                                        ifelse(recency_score >= 4 & frequency_score <= 1 & monetary_score <= 1, "New Customer",
+                                               ifelse((recency_score == 3 | recency_score == 4) & frequency_score <= 1 & monetary_score <= 1, "Promising",
+                                                      ifelse((recency_score == 2 | recency_score == 3) & (frequency_score == 2 | frequency_score == 3) & 
+                                                               (monetary_score == 2 | monetary_score == 3), "Need Attention",
+                                                             ifelse((recency_score == 2 | recency_score == 3) & frequency_score <= 2 & monetary_score <= 2, "About to Sleep",
+                                                                    ifelse(recency_score <= 2 & frequency_score > 2 & monetary_score > 2, "At Risk",
+                                                                           ifelse(recency_score <= 1 & frequency_score >= 4 & monetary_score >= 4, "Can't lose them",
+                                                                                  ifelse(recency_score <= 2 & frequency_score == 2 & monetary_score == 2, "Hibernating", "Lost")))))))))))
+head(rfm_segments,5)
+{% endhighlight %}
+
+{% highlight text %}
+# A tibble: 5 × 9
+  customer_id recency_days transaction_count amount recency_score frequency_score monetary_score rfm_score segment       
+        <dbl>        <dbl>             <dbl>  <dbl>         <int>           <int>          <int>     <dbl> <chr>         
+1       12347            3                 7   4310             5               5              5       555 Champion      
+2       12348           76                 4   1797             2               4              4       244 Loyal Customer
+3       12349           19                 1   1758             4               1              4       414 Lost          
+4       12350          311                 1    334             1               1              2       112 Lost          
+5       12352           37                 6   1405             3               5              4       354 Loyal Customer
+{% endhighlight %}
