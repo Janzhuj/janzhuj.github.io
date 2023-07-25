@@ -572,3 +572,43 @@ Conclusion
 ![Rplot-33](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-33.png)
 
 ####  According to the majority rule, the best number of clusters for K-means clustering algorithm is  3.
+
+#### Visualize cluster plots
+
+{% highlight r %}
+# Hierarchical clustering with K=2, and K=5
+hc.res <- eclust(rfm_Scaled, "hclust", k = 2, hc_metric = "euclidean",hc_method = "ward.D2", graph = FALSE)
+hc.res5 <- eclust(rfm_Scaled, "hclust", k = 5, hc_metric = "euclidean",hc_method = "ward.D2", graph = FALSE)
+### pam clustering with K=6
+pam.res <- pam(rfm_Scaled, 6, metric = "euclidean", stand = FALSE)
+### Clustering: Compute k-means with k = 3 
+set.seed(123)
+km.res <- kmeans(rfm_Scaled, centers = 3, nstart = 35)
+p1 <- fviz_cluster(hc.res, geom = "point",  ggtheme = theme_minimal())+ggtitle("Hierarchical clustering K=2")
+p2 <- fviz_cluster(hc.res5, geom = "point",  ggtheme = theme_minimal())+ggtitle("Hierarchical clustering K=5")
+p3 <- fviz_cluster(pam.res, geom = "point",  ggtheme = theme_minimal())+ggtitle("Pam clustering K=6")
+p4 <- fviz_cluster(km.res, geom = "point", data=rfm_Scaled,ggtheme = theme_minimal())+ggtitle("k-means clustering K=3")
+plot_grid(p1, p2, p3, p4, nrow=2, ncol=2)
+{% endhighlight %}
+
+![Rplot-35](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-35.png)
+
+#### Analysis clustering results
+
+{% highlight r %}
+names(km.res)
+# Lets also check the amount of customers in each cluster.
+km.res$size
+# centroids from model on normalized data
+km.res$centers 
+# In original customer information 
+rfm_k3 <- custormer_info %>% 
+  mutate(Cluster = km.res$cluster)
+rfm_k3 %>% select(-"CustomerID")%>% group_by(Cluster) %>% summarise_all("mean") %>% 
+  ungroup() %>% kable() %>% kable_styling()
+{% endhighlight %}
+
+![Rplot-36](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-36.png)
+
+#### As we can see from the results, we have 3 demonstrable clusters. Cluster 1 has the newest transactions, the highest frequency, and transaction amount compared to the other 2 clusters, which contains the most valuable customers.
+
