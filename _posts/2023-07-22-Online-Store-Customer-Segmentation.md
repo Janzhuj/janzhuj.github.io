@@ -601,6 +601,17 @@ names(km.res)
 km.res$size
 # centroids from model on normalized data
 km.res$centers 
+{% endhighlight %}
+
+{% highlight text %}
+[1]   24 1094 3207
+     Recency   Frequency    Monetary
+1 -0.8656131  8.57193980  9.37531267
+2  1.5311005 -0.35115225 -0.17084250
+3 -0.5158245  0.05563892 -0.01188207
+{% endhighlight %}
+
+{% highlight r %}
 # In original customer information 
 rfm_k3 <- custormer_info %>% 
   mutate(Cluster = km.res$cluster)
@@ -612,3 +623,31 @@ rfm_k3 %>% select(-"CustomerID")%>% group_by(Cluster) %>% summarise_all("mean") 
 
 #### As we can see from the results, we have 3 demonstrable clusters. Cluster 1 has the newest transactions, the highest frequency, and transaction amount compared to the other 2 clusters, which contains the most valuable customers.
 
+{% highlight r %}
+# rfm features pairwise plot for each cluster
+library(GGally)
+rfm_df <- as.data.frame(rfm_Scaled)
+rfm_df$cluster <- km.res$cluster
+rfm_df$cluster <- as.character(rfm_df$cluster)
+ggpairs(rfm_df, 1:3, mapping = ggplot2::aes(color = cluster, alpha = 0.5), 
+        diag = list(continuous = wrap("densityDiag")), 
+        lower=list(continuous = wrap("points", alpha=0.9)))
+
+# rfm features boxplot for each cluster
+f1<-ggplot(rfm_df, aes(x = cluster, y = Recency)) + 
+  geom_boxplot(aes(fill = cluster))
+f2<-ggplot(rfm_df, aes(x = cluster, y = Frequency)) + 
+  geom_boxplot(aes(fill = cluster))
+f3<-ggplot(rfm_df, aes(x = cluster, y = Monetary)) + 
+  geom_boxplot(aes(fill = cluster))
+plot_grid(f1, f2, f3, ncol=3)
+
+# Parallel coordiante plots allow us to put each feature on seperate column and lines connecting each column
+ggparcoord(data = rfm_df, columns = 1:3, groupColumn = 4, alphaLines = 0.4, title = "Parallel Coordinate Plot for the rfm Data", scale = "globalminmax", showPoints = TRUE) + theme(legend.position = "bottom")
+{% endhighlight %}
+
+![Rplot-37](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-37.png)
+
+![Rplot-38-0](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-38-0.png)
+
+![Rplot-39](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-39.png)
