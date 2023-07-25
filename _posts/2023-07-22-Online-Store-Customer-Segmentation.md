@@ -545,30 +545,5 @@ nb <- NbClust(rfm_Scaled, distance = "euclidean", min.nc = 2,
 fviz_nbclust(nb)
 {% highlight r %}
 
-{% highlight text %}
-Among all indices: 
-===================
-* 2 proposed  0 as the best number of clusters
-* 1 proposed  1 as the best number of clusters
-* 3 proposed  2 as the best number of clusters
-* 7 proposed  3 as the best number of clusters
-* 4 proposed  4 as the best number of clusters
-* 1 proposed  5 as the best number of clusters
-* 2 proposed  6 as the best number of clusters
-* 2 proposed  7 as the best number of clusters
-* 2 proposed  8 as the best number of clusters
-* 1 proposed  9 as the best number of clusters
-* 1 proposed  10 as the best number of clusters
-Conclusion
-=========================
-* According to the majority rule, the best number of clusters is  3 .
-{% highlight r %}
 
-![Rplot-34-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-34-1.png)
-
-![Rplot-34-2](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-34-2.png)
-
-![Rplot-33](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-33.png)
-
-####  According to the majority rule, the best number of clusters for K-means clustering algorithm is  3.
 
