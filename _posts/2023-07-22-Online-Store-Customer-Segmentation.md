@@ -10,6 +10,7 @@ comments: true
 In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy based on the specific segments. I will be using a widely known data set from [UCI Machine Learning Repository] (https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
 
 First let’s load the required packages.
+
 {% highlight r %}
 library(tidyverse)  
 library(readxl) 
