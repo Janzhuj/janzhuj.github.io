@@ -544,7 +544,7 @@ Determine the optimal number of clusters for K-means clustering. The NbClust pac
 nb <- NbClust(rfm_Scaled, distance = "euclidean", min.nc = 2,
               max.nc = 10, method = "kmeans")
 fviz_nbclust(nb)
-{% highlight r %}
+{% endhighlight %}
 
 {% highlight text %}
 Among all indices: 
@@ -563,7 +563,7 @@ Among all indices:
 Conclusion
 =========================
 * According to the majority rule, the best number of clusters is  3 .
-{% highlight r %}
+{% endhighlight %}
 
 ![Rplot-34-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-34-1.png)
 
