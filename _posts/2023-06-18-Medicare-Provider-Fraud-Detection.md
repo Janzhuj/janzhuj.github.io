@@ -41,7 +41,7 @@ Another important preprocessing step was resampling the imbalanced data to make 
 ## Exploratory Data Analysis
 
 ### 1. Class Labels
-Let’s take a look at the provider class dataset. It is an imbalanced dataset where the target variable, “Potential Fraud,” has 90.6% of providers not fraudulent and 9.6% of providers fraudulent. Notice, at the model evlaluation section, we will use metrics like precision, recall, F1-score rather than the accuracy metric to understand the performance of the classifiers for correctly determining which provider is fraudulent, since class distribution is high skewed, the accuracy metric is biased and not preferable to evlauate the model performance. 
+Let’s take a look at the provider class dataset. It is an imbalanced dataset where the target variable, “Potential Fraud,” has 90.6% of providers not fraudulent and 9.6% of providers fraudulent. The accuracy metric is not preferable to evlauate the model performance for imbalanced class labels. At the model evlaluation section, we will use metrics like precision, recall, F1-score rather than the accuracy metric to evaluate the performance of the classifiers. 
 
 ![det-4](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-4.png)
 
@@ -61,8 +61,79 @@ Before we proceed, let’s take a look at our patients. We notice that the major
 
 ![det-9](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-9.png)
 
+### 3. fraud VS. Non-fraud Providers Study
+
+Now, let’s explore the characteristics of fraudulent providers. We know that if the median line of a box plot lies outside the box of a comparison box plot, then there is likely to be a difference between the two groups. When comparing the box plots of characteristics, like claim numbers, beneficiary numbers, diagnose code numbers, and hospital duration variation, we find that there are obvious differences between fraudulent and non-fraudulent providers.
+
+![det-10](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-10.png)
+
+![det-11](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-11.png)
+
+![det-12](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-12.png)
+
+![det-13](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-13.png)
+
+![det-14](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-14.png)
+
+![det-15](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-15.png)
+
+## Data Modeling
+
+![det-16](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-16.png)
+
+### 1. Feature Selection
+
+In this section, I will pipleline classifiers and feature selection method to build the base algorithms. I choose RFE method for feature selection, and tune the hyperparameters of RFE to obtian the best number of features, as showed in the below, the number 41 is the best number of features for both logistic regression and random forest algorithms.
+
+![det-17](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-17.png)
+
+### 2. Explore Base Algorithm
+
+![det-18](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-18.png)
+
+### 3. Base Algorithm comparison
+
+Logistic Regression, Support Vector Machine, and Random Forest classifiers generally perform well. While the mean performance of the Gradient Boosting classifier appears good, its F1_weighted score has a relatively larger variance compared to the others. This may result in less stable results.
+
+![det-19](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-19.png)
+
+## Optimization Models
+
+### 1. Tune Hyperparameters
+
+![det-20](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-20.png)
+
+![det-21](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-21.png)
+
+![det-22](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-22.png)
+
+### 3. Evaluation Metrics for Imbalanced Data
+
+A comparative analysis was performed on the dataset using four classifier models: Logistic Regression, Random Forest, Linear Support Vector Machine, and Gradient Boosting. As discussed earlier, we will ignore the accuracy metric to evaluate the performance of the classifiers on this imbalanced dataset. Here, we are more interested in identifying potential fraudulent providers. Therefore, we will focus on metrics such as precision, recall, and F1-score to understand the performance of the classifiers in correctly determining which providers will commit fraud in the
+
+![det-23](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-23.png)
+
+![det-24](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-24.png)
+
+### 4. Maximize Minority’s Recall Scores
+
+From the above, it can be seen that all 4 classifier models were not able to generalize well on the minority class compared to the majority class. To minimize fraudulent providers incorrectly classified as non-faudulent providers (False Negative), we can use SMOTE related technolege to imporve recall scores of the minority class. As shown in below, after resampling, a clear surge in Recall is seen on the test data.
 
 
+
+![det-25](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-25.png)
+
+### 5. Feature Importances
+
+Machine Learning models are often black boxes, making their interpretation difficult. SHAP values (SHapley Additive exPlanations) is one method used to explain how each feature affects the model. The following plots show the main features affecting the prediction of the observations and the magnitude of the SHAP value for each feature. Here, I used shap__value[0], the SHAP values for class 0. The SHAP values for class 1 are symmetrical to them.
+
+
+![det-26](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-26.png)
+
+![det-27](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-27.png)
+
+## Conclusion
+![det-28](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-28.png)
 
 
 {% highlight r %}
