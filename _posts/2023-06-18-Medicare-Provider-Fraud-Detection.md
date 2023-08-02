@@ -22,11 +22,11 @@ Healthcare fraud and abuse take many forms. Some of the most common types that p
 ## Medicare claims dataset
 The dataset in this project comes from Kaggle's website - [Healthcare Provider Fraud Dection Analysis by Rohit Anand Gupta](https://www.kaggle.com/datasets/rohitrox/healthcare-provider-fraud-detection-analysis). The dataset consists of four sub-datasets, as listed below. 
 
-![det-1](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-1.png)
+![det-1](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-1.png)
 
 ## Workflow ( [See my github](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection) ) 
 
-![det-2](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-2.png)
+![det-2](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-2.png)
 
 ## Data Preporcessing 
 
@@ -36,30 +36,30 @@ Next, I label-encoded categorical data and scaled numerical data for uniform and
 
 Another important preprocessing step was resampling the imbalanced data to make class ratio to 1:1. Data imbalance is a typical scenario in many business problems like fraud detection, spam filtering, rare disease discovery, hardware fault detection, etc. In general, the minority/positive class is the main concern and is aimed to achieve the best results. If imbalanced data is not treated beforehand, most predictions will correspond to the majority class and treat minority class features as noise in the data and ignore them. This will result in high bias in the classifier model and degrade the model performance. Resampling data is one of the most common approaches to deal with an imbalanced dataset, including undersampling and oversampling. Here, I used two resampling techniques: 1) SMOTE, which randomly oversamples data by choosing one of K instances to interpolate new synthetic instances; and 2) SMOTE+ENN, which is a hybrid technique. ENN is an undersampling technique that removes the nearest neighbors of each majority class instance. Integrating ENN with SMOTE can clean overlapping data points for each class distributed in sample space and optimize the performance of classifier models while avoiding overfitting.
 
-![det-3](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-3.png)
+![det-3](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-3.png)
 
 ## Exploratory Data Analysis
 
 ### 1. Class Labels
 Let’s take a look at the provider class dataset. It is an imbalanced dataset where the target variable, “Potential Fraud,” has 90.6% of providers not fraudulent and 9.6% of providers fraudulent. Notice, at the model evlaluation section, we will use metrics like precision, recall, F1-score rather than the accuracy metric to understand the performance of the classifiers for correctly determining which provider is fraudulent, since class distribution is high skewed, the accuracy metric is biased and not preferable to evlauate the model performance. 
 
-![det-4](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-4.png)
+![det-4](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-4.png)
 
 ### 2. Beneficiary Basic Information Study
 
 Before we proceed, let’s take a look at our patients. We notice that the majority of our beneficiaries belong to race 1. The percentage of gender 0 is larger than that of gender 1. Fifty percent of beneficiaries fall between the ages of 68 and 82 years old, with some outliers below 47 who are disabled. The chronic disease risk scores display a bell-like shape with a slight right tail. There is a positive relationship between the mean annual reimbursement amount and the chronic disease risk scores of beneficiaries.
 
-![det-5](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-5.png)
+![det-5](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-5.png)
 
-![det-5-1](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-5-1.png)
+![det-5-1](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-5-1.png)
 
-![det-6](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-6.png)
+![det-6](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-6.png)
 
-![det-7](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-7.png)
+![det-7](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-7.png)
 
-![det-8](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-8.png)
+![det-8](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-8.png)
 
-![det-9](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-8.png)
+![det-9](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-9.png)
 
 
 
