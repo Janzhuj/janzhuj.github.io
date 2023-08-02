@@ -24,7 +24,7 @@ The dataset in this project comes from Kaggle's website - [Healthcare Provider F
 
 ![det-1](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-1.png)
 
-## Workflow ( [See my github](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection) ) 
+## Workflow 
 
 ![det-2](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-2.png)
 
