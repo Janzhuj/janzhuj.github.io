@@ -41,7 +41,7 @@ Another important preprocessing step was resampling the imbalanced data to make 
 ## Exploratory Data Analysis
 
 ### 1. Class Labels
-Let’s take a look at the provider class dataset. It is an imbalanced dataset where the target variable, “Potential Fraud,” has 90.6% of providers not fraudulent and 9.6% of providers fraudulent. The accuracy metric is not preferable to evlauate the model performance for imbalanced class labels. At the model evlaluation section, we will use metrics like precision, recall, F1-score rather than the accuracy metric to evaluate the performance of the classifiers. 
+Let’s take a look at the provider class dataset. It is an imbalanced dataset where the target variable, “Potential Fraud,” has 90.6% of providers not fraudulent and 9.6% of providers fraudulent. The accuracy metric is not preferable to evlauate the model performance for imbalanced classes. At the model evlaluation section, we will use metrics like precision, recall, F1-score rather than the accuracy metric to evaluate the performance of the classifiers. 
 
 ![det-4](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-4.png)
 
@@ -132,8 +132,4 @@ Machine Learning models are often black boxes, making their interpretation diffi
 ## Conclusion
 ![det-28](/figs/2023-06-18-Medicare-Provider-fraud-Detection/det-28.png)
 
-Can anyone draw any inference from this map? It seems the highest income per capita in the county is a lot more than $60K, and lowest much below $20K. 
-
-According to above maps, I'm already jealous of people who live in Portland Maine.
-
-The souce code used to create this blog can be found [here](https://github.com/susanli2016/Data-Analysis-with-R/blob/master/CensusDataPortland.Rmd).
+The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection).
