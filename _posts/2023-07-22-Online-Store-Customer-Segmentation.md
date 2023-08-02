@@ -727,3 +727,5 @@ plot_grid(fig1, fig2, fig3)
 {% endhighlight %}
 
 ![Rplot-40](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-40.png)
+
+The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection).
