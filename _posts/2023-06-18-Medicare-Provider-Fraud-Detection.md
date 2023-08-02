@@ -20,7 +20,7 @@ Healthcare fraud and abuse take many forms. Some of the most common types that p
 - False price reporting. Providers charging more than peers for the same services.
 
 ## Medicare claims dataset
-The dataset in this project comes from Kaggle's website - Healthcare Provider Fraud Dection Analysis by Rohit Anand Gupta. The dataset consists of four sub-datasets, as listed below. 
+The dataset in this project comes from Kaggle's website - [Healthcare Provider Fraud Dection Analysis by Rohit Anand Gupta](https://www.kaggle.com/datasets/rohitrox/healthcare-provider-fraud-detection-analysis). The dataset consists of four sub-datasets, as listed below. 
 
 {% highlight r %}
 library(choroplethr)
