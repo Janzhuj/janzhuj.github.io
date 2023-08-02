@@ -7,7 +7,7 @@ share: true
 comments: true
 ---
 
-In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy based on the specific segments. I will be using a widely known data set from [UCI Machine Learning Repository] (https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
+In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy based on the specific segments. I will be using a widely known data set from [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
 
 First let’s load the required packages.
 
@@ -728,4 +728,4 @@ plot_grid(fig1, fig2, fig3)
 
 ![Rplot-40](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-40.png)
 
-The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection).
+The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Online-Store-Customer-Segmentation).
