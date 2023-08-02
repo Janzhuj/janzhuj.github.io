@@ -1,17 +1,26 @@
 ---
 layout: post
-title: "Census Data for Portland, Maine"
-excerpt: "Census"
+title: "Medicare Provider Fraud Detection"
+excerpt: "Classification, Python"
 tags: [rstats]
 share: true
 comments: true
 ---
 
-I have been having a lot of fun exploring `choroplethr` package created by [Ari Lamstein](http://www.arilamstein.com/) and even made a [census Shiny app](https://susanli.shinyapps.io/default-shiny-app/).
+The US spends over $4 trillion per year on healthcare, which is largely conducted by private providers and reimbursed by insurers. Overbilling, waste, and fraud are major concerns in the healthcare system and are estimated by the US Federal Bureau of Investigation to account for 3% to 10% of overall spending. Provider fraud occurs when healthcare providers misreport their claims to receive higher payments. In this work, I use large-scale claims data from Medicare, the US federal health insurance program for elderly adults and the disabled, to perform an exploratory data analysis. My goal is to identify patterns consistent with fraud or overbilling and understand characteristics associated with high suspiciousness of fraud. My proposed approach for fraud detection is supervised and involves developing a broad range of classifiers on labeled training data to help identify potential providers who might overbill insurers. I also provide reasoning and interpretable insights into the potentially suspicious behavior of flagged providers by analyzing important features. Additionally, I apply SMOTE techniques to handle imbalanced data and improve 1-fold lift recall for the minority/fraud class. The results can be used to guide investigations and auditing of suspicious providers for both public and private health insurance systems.
 
-Its time to put this skill in practice. Today I'm going to use R to understand demographics of the state of Maine, the city of Portland, and zipcode of 04101.
+## Healthcare Provider Fraud overview
+Healthcare fraud and abuse take many forms. Some of the most common types that providers deceive insurers through claims procedures are listed below:
 
-First, have a look the state data, head only. 
+- Phantom Billing. Providers billing for services not provided.
+- Unnecessary Services. Providers administering (more) tests and treatments that are not medically necessary.
+- Upcoding. Providers administering more expensive tests and equipments.
+- Multiple-billing. Providers multiple-billing for services rendered.
+- Unbundling. Providers unbundling or billing separately for laboratory tests to get higher reimbursements.
+- False price reporting. Providers charging more than peers for the same services.
+
+## Medicare claims dataset
+The dataset in this project comes from Kaggle's website - Healthcare Provider Fraud Dection Analysis by Rohit Anand Gupta. The dataset consists of four sub-datasets, as listed below. 
 
 {% highlight r %}
 library(choroplethr)
