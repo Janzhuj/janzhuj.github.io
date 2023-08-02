@@ -24,7 +24,8 @@ The dataset in this project comes from Kaggle's website - [Healthcare Provider F
 
 ![det-1](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-1.png)
 
-## Workflow ( [see my github](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection) ) 
+## Workflow ( [See my github](https://github.com/Janzhuj/Medicare-Provider-Fraud-Detection) ) 
+
 ![det-2](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-2.png)
 
 ## Data Preporcessing 
@@ -49,10 +50,15 @@ Let’s take a look at the provider class dataset. It is an imbalanced dataset w
 Before we proceed, let’s take a look at our patients. We notice that the majority of our beneficiaries belong to race 1. The percentage of gender 0 is larger than that of gender 1. Fifty percent of beneficiaries fall between the ages of 68 and 82 years old, with some outliers below 47 who are disabled. The chronic disease risk scores display a bell-like shape with a slight right tail. There is a positive relationship between the mean annual reimbursement amount and the chronic disease risk scores of beneficiaries.
 
 ![det-5](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-5.png)
+
 ![det-5-1](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-5-1.png)
+
 ![det-6](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-6.png)
+
 ![det-7](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-7.png)
+
 ![det-8](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-8.png)
+
 ![det-9](/figs/2023-06-18-Medicare-Provider-Fraud-Detection/det-8.png)
 
 
