@@ -175,4 +175,4 @@ The death rate had been declining for years, an effect of improvement for health
 
 That's all for now, next time, probably state by state.
 
-Source code used to make this blog post can be found [here](https://github.com/susanli2016/Data-Analysis-with-R/blob/master/causeofDeath.Rmd).
+
