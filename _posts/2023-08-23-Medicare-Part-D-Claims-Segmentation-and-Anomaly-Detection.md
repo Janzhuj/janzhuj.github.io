@@ -15,17 +15,17 @@ When our aim is to identify suspicious claims, we face a problem:  there is an o
 
 Here is an overview of overall Medicare Part D Prescibers scenario in the US. We can see the number of providers in each state in 2021, and the claims percentage by drug label, brand, insurance plan, and subsidy. We can also easily identify the specialty with the most providers, claims, and costs. In addition, we have a histogram to show us the average health condition of bentificiaries.
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+![1](/figs/2017-03-25-Causes-of-Death/1.png)
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+![2](/figs/2017-03-25-Causes-of-Death/2.jpg)
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+![3](/figs/2017-03-25-Causes-of-Death/3.jpg)
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+![4](/figs/2017-03-25-Causes-of-Death/4.png)
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+![5](/figs/2017-03-25-Causes-of-Death/5.png)
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+![6](/figs/2017-03-25-Causes-of-Death/6.png)
 
 
 
