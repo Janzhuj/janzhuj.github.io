@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Medicare Part D Prescribers Segmentation and Anomaly Detection"
+title: "Medicare Part D Providers Segmentation and Anomaly Detection"
 excerpt: "Causes of Death"
 tags: [rstats]
 share: true
