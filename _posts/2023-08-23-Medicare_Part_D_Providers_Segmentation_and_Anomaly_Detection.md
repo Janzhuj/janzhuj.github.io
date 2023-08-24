@@ -7,7 +7,7 @@ share: true
 comments: true
 ---
 
-Did you know that the US spends over $4 trillion per year on healthcare, 3% to 10% of overall spending are are overbilling, waste and fraud.
+Did you know that the US spends over $4 trillion per year on healthcare, 3% to 10% of overall spending are overbilling, waste and fraud.
 
 
 Want to know how other people die? The [Centers of Disease Control and Prevention (CDC)](https://wonder.cdc.gov/ucd-icd10.html) provides estimates for the number of people who die due to each of the causes, from 1999 to 2015. The following are the causes of death at a glance.
