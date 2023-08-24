@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Medicare Part D Providers Segmentation and Anomaly Detection"
+title: "Medicare Part D Claims Segmentation and Anomaly Detection"
 excerpt: "Medicare, EDA, Clustering, Anomaly Detection, Python"
 tags: [rstats]
 share: true
@@ -9,18 +9,33 @@ comments: true
 
 Did you know that the United States spends over $4 trillion annually on healthcare? Unfortunately, between 3% and 10% of this spending is lost to abuse, waste, and fraud. As I researched healthcare claims data, I discovered the staggering amount spent on prescription drug claims each year. There is a crisis of drug abuse and fraud, particularly with labeled drugs such as opioids, antibiotics, long-acting opioids, and antipsychotics for the elderly. This is a serious issue that not only hurts the health and well-being of individuals and society but also leads to higher costs for care and exorbitant financial losses for individuals and organizations.
 
-Where can we get the data? The actual patient claim data is protected and is not available to the public. The [Centers for Medicare and Medicaid Services (CMS)](https://data.cms.gov/search) provide aggregated data at the provider level.It contains information on prescription drugs provided to Medicare beneficiaries by providers, as well as the demographics of the providers. Here I will use the Medicare Part D Prescibers dataset.
+Where can we get the data? The actual patient claim data is protected and not available to the public. However, [the Centers for Medicare and Medicaid Services (CMS)](https://data.cms.gov/search) provide aggregated claim data at the provider level. This data contains information on prescription drugs provided to Medicare beneficiaries by providers, as well as the demographics of the providers. In this case, I will use the Medicare Part D claim dataset.
 
-When the aim is to identify suspicious healthcare providers, we face a problem: there are too many healthcare claims. It’s like finding a needle in a haystack. What we can do is to conduct provider segmentation, and then identify suspicious ones. This way, we reduce the size of the search pool, cluster the similar claims in same groups, and make the anomaly detection task easyly.  
+When our aim is to identify suspicious claims, we face a problem:  there is an overwhelming amount of healthcare data. It’s like finding a needle in a haystack. What we can do is to conduct claim segmentation and then identify suspicious claims. This way, we reduce the size of the search pool, cluster similar claims into groups, and make the anomaly detection task easier.  
+
+Here is an overview of overall Medicare Part D Prescibers scenario in the US. We can see the number of providers in each state in 2021, and the claims percentage by drug label, brand, insurance plan, and subsidy. We can also easily identify the specialty with the most providers, claims, and costs. In addition, we have a histogram to show us the average health condition of bentificiaries.
+
+![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+
+![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+
+![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+
+![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+
+![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
+
+![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
 
 
 
-By exploring Medicare Part D Prescibers dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. ;)
+
+
+By exploring Medicare Part D claims dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. ;)
 
 I cleaned the dataset, and conduct Exploratory data analysis. An overview of overall healthcare provider/prescriber scenario in the US; the charts also act as filters for other charts, so we can see the sickness level of patients of California going to see a dentist in the bottom right bar chart using the two charts above.
 
 
-Want to know how other people die? The [Centers of Disease Control and Prevention (CDC)](https://wonder.cdc.gov/ucd-icd10.html) provides estimates for the number of people who die due to each of the causes, from 1999 to 2015. The following are the causes of death at a glance.
 
 
 {% highlight r %}
