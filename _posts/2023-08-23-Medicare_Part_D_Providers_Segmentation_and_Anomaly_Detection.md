@@ -7,7 +7,7 @@ share: true
 comments: true
 ---
 
-Did you know that in the US, billions are expended in frauds, waste and abuse of prescription drugs. The US spends over $4 trillion per year on healthcare, which is largely conducted by private providers and reimbursed by insurers. Overbilling, waste, and fraud are major concerns in the healthcare system and are estimated by the US Federal Bureau of Investigation to account for 3% to 10% of overall spending. 
+Did you know that the US spends over $4 trillion per year on healthcare, 3% to 10% of overall spending are are overbilling, waste and fraud.
 
 
 Want to know how other people die? The [Centers of Disease Control and Prevention (CDC)](https://wonder.cdc.gov/ucd-icd10.html) provides estimates for the number of people who die due to each of the causes, from 1999 to 2015. The following are the causes of death at a glance.
