@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Medicare Part D Providers Segmentation and Anomaly Detection"
-excerpt: "Causes of Death"
+excerpt: "Medicare, EDA, Clustering, Anomaly Detection, Python"
 tags: [rstats]
 share: true
 comments: true
