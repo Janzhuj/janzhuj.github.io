@@ -55,7 +55,7 @@ we clustered all data into six clustersd, and got the centriods of key metrics f
 
 ![11](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/11.png)
 
-I conducted some descriptive statistics analysis for key metrics, and analyzed those statistics information with boxplot.  I identify some patterns for each cluster. 
+I conducted some descriptive statistics analysis for key metrics. By analyzing those statistics information with boxplot, I identify some patterns for each cluster. 
 
 {% highlight r %}
 print ("Opioid_LA_mean_cost describles by clusters")
