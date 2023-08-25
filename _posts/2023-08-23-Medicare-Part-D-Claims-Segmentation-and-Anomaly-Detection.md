@@ -1,4 +1,4 @@
----
+![image](https://github.com/Janzhuj/janzhuj.github.io/assets/99841253/1b9e943e-1c84-4e1e-b0c2-f55025d3d487)---
 layout: post
 title: "Medicare Part D Claims Segmentation and Anomaly Detection"
 excerpt: "Medicare, EDA, Clustering, Anomaly Detection, Python"
@@ -35,7 +35,7 @@ Wow, some features had high positive correlation. After some study, I decide to 
 
 ![8](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/8.png)
 
-I applied k-means clustering to segment claims and used KElbowVisualizer to identify optimum number of clusters as below. As shown in below, I decided that 6 is the optimum number of clusters.
+I applied k-means clustering to partition claim data into k clusters in which each observation belonged to the cluster with the nearest centroid, and used KElbowVisualizer to identify optimum number of clusters. As shown in below, I decided that 6 is the optimum number of clusters.
 
 {% highlight r %}
 from yellowbrick.cluster import KElbowVisualizer
@@ -49,7 +49,7 @@ Elbow_M.show()
 
 ![9](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/9.png)
 
-we clustered all data into six clustersd, and got the centriods of key metrics for each cluster. As shown in below. 
+The details of six clusters and  key metrics' centriods for each cluster were shown in below. 
 
 ![10](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/10.png)
 
@@ -75,8 +75,7 @@ for name in df_clean.columns[:-1]:
 
 ![13](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/13.jpg)
 
-Now, suspicious claims for labeled drugs narrow down to special cluster. we can identify fraurent claims from three high suspicious clusters
-
+Now, suspicious claims for labeled drugs narrow down to some special clusters: Claims with high mean cost and low prscription rate for opiods,  as well as high lmean cost and high prscrition rate for long-acting optioid, were grouped into the second cluster; Claims with high mean cost and low prescription rate for antibiotics, were grouped into the third cluster; While claims with high mean cost and high prescription rate for antipsychotics were grouped into the forth cluster. By narrowing the scope of our search, we check out fraurent prescibers from high suspicious clusters more quickly and presice
 
 
 
