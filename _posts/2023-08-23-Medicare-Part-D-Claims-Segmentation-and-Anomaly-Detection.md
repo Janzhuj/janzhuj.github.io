@@ -1,4 +1,3 @@
-![image](https://github.com/Janzhuj/janzhuj.github.io/assets/99841253/1b9e943e-1c84-4e1e-b0c2-f55025d3d487)---
 layout: post
 title: "Medicare Part D Claims Segmentation and Anomaly Detection"
 excerpt: "Medicare, EDA, Clustering, Anomaly Detection, Python"
