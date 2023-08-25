@@ -77,9 +77,13 @@ for name in df_clean.columns[:-1]:
 
 Suspicious claims of labeled drugs can be narrowed down to specific clusters: Claims with high mean cost and low prescription rate for opioids, as well as high mean cost and high prescription rate for long-acting opioids, were grouped into the second cluster. Claims with high mean cost and low prescription rate for antibiotics were grouped into the third cluster. Claims with high mean cost and high prescription rate for antipsychotics were grouped into the fourth cluster. By narrowing the scope of our search, we can identify fraudulent prescribers from highly suspicious clusters more quickly and precisely.
 
-In the instance as below, firstly, we list the specilty types that might exist fraudulent claims for special labeled drugs, pick up specilty type that we are interested in, here, I choose family practice in the second cluster as a example, and then compare the key metrics - opamong clusters. 
+As we know, the mean cost and prescription rate for specific drugs are incomparable among specialty types. Therefore, when diagnosing if a provider offers suspicious claims, we need to compare them within the same specialty type. In the instance below, let’s see if labeled drug claims from a specific specialty type in a suspicious cluster are significantly different from others. Firstly, we list the specialty types in the second cluster, which was labeled as high suspicious on Opioid claims, and pick up a specialty type that we are interested in - here, I choose family practice as an example - and then compare the key metrics among clusters.
 
 ![14](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/14.jpg)
+
+
+
+
 
 let's take a example to search  prescibers for suspicious opiod claim on 
 
