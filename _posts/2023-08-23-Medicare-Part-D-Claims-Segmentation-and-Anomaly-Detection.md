@@ -31,15 +31,33 @@ During the exploratory data analysis section, I found that four labeled drugs - 
 
 ![7](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/7.png)
 
-Wow, some features had high positive correlation. After some study, I decide to use  mean cost, and prescriber rate as key metrics. 
+Wow, some features had high positive correlation. After some study, I decide to use  mean cost, and prescriber rate as key metrics. Now, there were no high correlated features.
 
 ![8](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/8.png)
 
+I applied k-means clustering to segment claims and used KElbowVisualizer to identify optimum number of clusters as below.
+
+{% highlight r %}
+from yellowbrick.cluster import KElbowVisualizer
+from sklearn.cluster import KMeans
+print('Elbow Method to determine the number of clusters:')
+plt.figure(figsize=(10,5))
+Elbow_M = KElbowVisualizer(KMeans(), k=10) # metric default: "distortion", mean sum of squared distances to centers
+Elbow_M.fit(df_scaled)
+Elbow_M.show()
+{% endhighlight %}
+
 ![9](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/9.png)
 
+Complete code can be seen in this colab notebook. Using elbow method, I decided that 5 is the optimum number of clusters
 
 
-By exploring Medicare Part D claims dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. The souce code used to create this blog can be found here.
+
+
+
+
+
+By exploring Medicare Part D claims dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. The souce code used to create this blog can be found here.o se
 
 I cleaned the dataset, and conduct Exploratory data analysis. An overview of overall healthcare provider/prescriber scenario in the US; the charts also act as filters for other charts, so we can see the sickness level of patients of California going to see a dentist in the bottom right bar chart using the two charts above.
 
