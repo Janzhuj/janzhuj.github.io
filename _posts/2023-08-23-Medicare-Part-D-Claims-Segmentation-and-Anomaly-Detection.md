@@ -42,7 +42,7 @@ from yellowbrick.cluster import KElbowVisualizer
 from sklearn.cluster import KMeans
 print('Elbow Method to determine the number of clusters:')
 plt.figure(figsize=(10,5))
-Elbow_M = KElbowVisualizer(KMeans(), k=10) # metric default: "distortion", mean sum of squared distances to centers
+Elbow_M = KElbowVisualizer(KMeans(), k=10) 
 Elbow_M.fit(df_scaled)
 Elbow_M.show()
 {% endhighlight %}
