@@ -35,7 +35,7 @@ Wow, some features had high positive correlation. After some study, I decide to 
 
 ![8](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/8.png)
 
-I applied k-means clustering to segment claims and used KElbowVisualizer to identify optimum number of clusters as below. Using elbow method, I decided that 6 is the optimum number of clusters
+I applied k-means clustering to segment claims and used KElbowVisualizer to identify optimum number of clusters as below. Using elbow method, I decided that 6 is the optimum number of clusters.
 
 {% highlight r %}
 from yellowbrick.cluster import KElbowVisualizer
