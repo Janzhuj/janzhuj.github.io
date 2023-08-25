@@ -73,7 +73,7 @@ for name in df_clean.columns[:-1]:
 
 ![12](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/12.png)
 
-
+![13](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/13.jpg)
 
 
 By exploring Medicare Part D claims dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. The souce code used to create this blog can be found here.o se
