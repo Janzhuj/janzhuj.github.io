@@ -75,9 +75,15 @@ for name in df_clean.columns[:-1]:
 
 ![13](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/13.jpg)
 
-Now, suspicious claims for labeled drugs narrow down to some special clusters: Claims with high mean cost and low prscription rate for opiods,  as well as high lmean cost and high prscrition rate for long-acting optioid, were grouped into the second cluster; Claims with high mean cost and low prescription rate for antibiotics, were grouped into the third cluster; While claims with high mean cost and high prescription rate for antipsychotics were grouped into the forth cluster. By narrowing the scope of our search, we check out fraurent prescibers from high suspicious clusters more quickly and presice
+Suspicious claims of labeled drugs can be narrowed down to specific clusters: Claims with high mean cost and low prescription rate for opioids, as well as high mean cost and high prescription rate for long-acting opioids, were grouped into the second cluster. Claims with high mean cost and low prescription rate for antibiotics were grouped into the third cluster. Claims with high mean cost and high prescription rate for antipsychotics were grouped into the fourth cluster. By narrowing the scope of our search, we can identify fraudulent prescribers from highly suspicious clusters more quickly and precisely.
 
+In the instance as below, firstly, we list the specilty types that might exist fraudulent claims for special labeled drugs, pick up specilty type that we are interested in, here, I choose family practice in the second cluster as a example, and then compare the key metrics - opamong clusters. 
 
+![14](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/14.jpg)
+
+let's take a example to search  prescibers for suspicious opiod claim on 
+
+Now, let's dive deeper into the cluster 4 to identify outlier providers. 
 
 By exploring Medicare Part D claims dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. The souce code used to create this blog can be found here.o se
 
