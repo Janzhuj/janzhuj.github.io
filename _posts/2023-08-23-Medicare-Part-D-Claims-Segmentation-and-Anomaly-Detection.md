@@ -35,7 +35,7 @@ Wow, some features had high positive correlation. After some study, I decide to 
 
 ![8](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/8.png)
 
-I applied k-means clustering to segment claims and used KElbowVisualizer to identify optimum number of clusters as below. Using elbow method, I decided that 6 is the optimum number of clusters.
+I applied k-means clustering to segment claims and used KElbowVisualizer to identify optimum number of clusters as below. As shown in below, I decided that 6 is the optimum number of clusters.
 
 {% highlight r %}
 from yellowbrick.cluster import KElbowVisualizer
@@ -49,10 +49,29 @@ Elbow_M.show()
 
 ![9](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/9.png)
 
+we clustered all data into six clustersd, and got the centriods of key metrics for each cluster. As shown in below. 
 
+![10](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/10.png)
 
+![11](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/11.png)
 
+I conducted some descriptive statistics analysis for key metrics, and compared those statistics information with boxplot.  I identify some patterns for each cluster. 
 
+{% highlight r %}
+print ("Opioid_LA_mean_cost describles by clusters")
+for  i in range(0,6):
+    print ("Cluster:", str(i))
+    print(df_clean.Opioid_LA_mean_cost[df_clean['clusters']==i].describe())
+{% endhighlight %}
+
+{% highlight r %}
+for name in df_clean.columns[:-1]:
+    sns.set(rc={"figure.figsize":(8, 4)})
+    sns.boxplot(x="clusters",y=name, data=df_clean).set_title(name + " vs. Clusters")
+    plt.show()
+{% endhighlight %}
+
+![12](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/12.png)
 
 
 
