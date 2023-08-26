@@ -100,7 +100,7 @@ We also can use unsupervised anomaly detection methods to identify abnormal or u
 
 ![17-2](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-2.jpg)
 
-Choosing one of above methods, we obtained a list of fraudulent prescribers.
+Choosing one of anomaly detection methods from above, we obtained a list of fraudulent prescribers.
 
 {% highlight r %}
 df_ipm['outlier'] = y_pred_IForest.tolist()
