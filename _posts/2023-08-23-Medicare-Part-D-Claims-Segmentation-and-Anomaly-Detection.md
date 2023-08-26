@@ -122,6 +122,8 @@ Opioid_imp.head(2)
 
 ![21](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/21.jpg)
 
+The souce code used to create this blog can be found in my github.
+
 ## The End
 
-The souce code used to create this blog can be found in my github.
+
