@@ -98,187 +98,37 @@ I dived deeper into claim information from Interventional Pain Management provid
 
 ![17-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-1.jpg)
 
-
-
-
-can also select any other cluster for pinpointing at confounding providers. The scatter plot on the right side provides details of the provider on hovering over a circle. The providers/prescribers towards the far right are the ones who incur high costs. When their patient risk score is low, I consider them to be suspicious.
-
-
-
-
-
-
-
-
-let's take a example to search  prescibers for suspicious opiod claim on 
-
-Now, let's dive deeper into the cluster 4 to identify outlier providers. 
-
-By exploring Medicare Part D claims dataset, I conduct Exploratory data analysis, have an overview of overall Medicare Part D Prescibers scenario in the US, to perform Providers Segmentation and Anomaly Detection. It’s like finding a needle in a haystack. More precisely, it’s like finding a faulty needle in a pool of needles. Enter Graph Analysis to the rescue. Using Tableau dashboards, I will show how we can filter the providers and identify suspicious ones. This way, we reduce the size of the search pool, so that finding a faulty needle becomes easy. The souce code used to create this blog can be found here.o se
-
-I cleaned the dataset, and conduct Exploratory data analysis. An overview of overall healthcare provider/prescriber scenario in the US; the charts also act as filters for other charts, so we can see the sickness level of patients of California going to see a dentist in the bottom right bar chart using the two charts above.
-
-
-
+Choosing one of above methods, we obtained a list of fraudulent prescribers.
 
 {% highlight r %}
-url_causes <- "https://ibm.box.com/shared/static/souzhfxe3up2hrh23phciz18pznbtqxp.csv"
-
-df <- read.csv(url_causes)
-unique(df$Cause)
-sum(df$Deaths)
-unique(df$Year)
-unique(df$Gender)
-unique(df$Age)
-df[!complete.cases(df), ]
+df_ipm['outlier'] = y_pred_IForest.tolist()
+Opioid_imp_1 = df_ipm.loc[df_ipm['outlier'] == 1]
+print('Providers (NPI) in Interventional Pain Management who probably perform abnormal Opioid drugs on the claim:\n', 
+      list(Opioid_imp_1.PRSCRBR_NPI))
 {% endhighlight %}
-
-This mortality data contains 51 causes and 6540835 deaths for the year 2005, 2010 and 2015. The gender are male and female, and the age from 0 to 100. And there is no missing value in the dateset.
-
-### So, what are the top causes of death in the United States?
-
-
-{% highlight r %}
-library(ggplot2)
-library(ggthemes)
-ggplot(aes(x = reorder(Cause,-Deaths), y = Deaths), data = df) + 
-  geom_bar(stat = 'identity') +
-  ylab('Total Deaths') +
-  xlab('') +
-  ggtitle('Causes of Deaths') +
-  theme_tufte() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-{% endhighlight %}
-
-
-Heart disease and cancer are far away the most important causes of death in the US. Let?s take these top 10 causes of death and make a new data frame for some plotting, as follows:
-
-
-{% highlight r%}
-library(dplyr)
-cause_group <- group_by(df, Cause)
-df.death_by_cause <- summarize(cause_group, 
-                               sum = sum(Deaths))
-df.death_by_cause <- arrange(df.death_by_cause, desc(sum))
-top_10 <- head(df.death_by_cause, 10)
-top_10
-ggplot(aes(x = reorder(Cause, sum), y = sum), data = top_10) +
-  geom_bar(stat = 'identity') +
-  theme_tufte() +
-  theme(axis.text = element_text(size = 12, face = 'bold')) +
-  coord_flip() +
-  xlab('') +
-  ylab('Total Deaths') +
-  ggtitle("Top 10 Causes of Death")
-{% endhighlight %}
-
 
 {% highlight text %}
-## A tibble: 10 × 2
-##                                         Cause     sum
-##                                        <fctr>   <int>
-## 1                            Diseases of heart 1883528
-## 2                          Malignant neoplasms 1729960
-## 3           Chronic lower respiratory diseases  424042
-## 4                     Cerebrovascular diseases  413364
-## 5           Accidents (unintentional injuries)  385148
-## 6                          Alzheimer's disease  265653
-## 7                            Diabetes mellitus  223721
-## 8                      Influenza and pneumonia  170153
-## 9  Nephritis, nephrotic syndrome and nephrosis  144333
-## 10             Intentional self-harm (suicide)  115175
+Providers (NPI) in Interventional Pain Management who probably perform abnormal Opioid drugs on the claim:
+ [1003269242, 1013954130, 1043297856, 1043303886, 1093753899, 1124137088, 1134348014, 1154345585, 1215000468, 1245264621, 1245438597, 1255305124, 1306038674, 1316941305, 1336170216, 1336180314, 1336432038, 1346230612, 1346274792, 1376907774, 1417189812, 1447200761, 1457351322, 1457418386, 1457434268, 1477565208, 1518922657, 1548273501, 1558353078, 1558501320, 1568410900, 1568585081, 1568677300, 1619934858, 1619950375, 1639167091, 1669662151, 1679511638, 1679572994, 1689600041, 1699717181, 1730400193, 1750451258, 1780874446, 1801819206, 1821088451, 1831457357, 1891775961, 1891781753, 1902005721, 1912993478, 1932109170, 1932182763, 1942599253, 1992702039, 1992904528]
 {% endhighlight %}
 
-![Rplot-2](/figs/2017-03-25-Causes-of-Death/Rplot-2.png)
-
-Heart desease remains the leading cause of death in the US, followed by cancer(Malignant neoplasms), Chronic lower respiratory desease takes the third place but by a wide margin.
-
-### Are men more likely to die than women? Or vice versa? Does it depend on cause of death or age?
+Tagging them to original dataset, we obtain the detailed information of each interventional pain management provider with fraudulent behavior. 
 
 {% highlight r %}
-df_top_10 <- df[df$Cause %in% unique(top_10$Cause), ]
-
-ggplot(aes(x = reorder(Cause, Deaths), y = Deaths, fill = Gender), data = df_top_10) +
-  geom_bar(stat = 'identity', position = position_dodge()) +
-  theme_tufte() +
-  coord_flip() +
-  ggtitle("Top 10 Causes of Death") +
-  facet_wrap(~Year) +
-  theme_fivethirtyeight() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+Opioid_imp = df.merge(Opioid_imp_1, how='inner',left_on='PRSCRBR_NPI', right_on='PRSCRBR_NPI')
+print(Opioid_imp.shape)
+Opioid_imp.head(2)
 {% endhighlight %}
 
-![Rplot-3](/figs/2017-03-25-Causes-of-Death/Rplot-3.png)
-
-
-The picture does not change much when we compare 2005, 2010 and 2015. And more Ameican women than men dying for heart disease. Also Stroke(cerebrovascular diseases), Alzheimer's disease and Influenza and pneumonia seem affect more women than men. 
-
-
-{% highlight r %}
-ggplot(aes(x = Age, y = Deaths, color = Cause), 
-       data = df_top_10[df_top_10$Gender == 'M',]) +
-  geom_smooth(method = 'loess') +
-  ggtitle('Causes of Death by Age for Male')
+{% highlight text %}
+(56, 98)
+PRSCRBR_NPI	Prscrbr_Last_Org_Name	Prscrbr_First_Name	Prscrbr_MI	Prscrbr_Crdntls	Prscrbr_Gndr	Prscrbr_Ent_Cd	Prscrbr_St1	Prscrbr_St2	Prscrbr_City	...	Antpsyct_mean_cost	Opioid_Prscrbr_Rate_y	Opioid_LA_Prscrbr_Rate_y	Antbtc_Prscrbr_Rate	Antpsyct_Prscrbr_Rate	clusters	Prscrbr_Type_y	Opioid_mean_cost_scaled	Opioid_Prscrbr_Rate_scaled	outlier
+0	1003269242	Rivelis	Yulia	NaN	M.D.	F	I	3883 Airway Dr	NaN	Santa Rosa	...	0.0	17	19	0.0	0.0	2	Interventional Pain Management	0.033762	0.149425	1
+1	1013954130	Smith	Gregory	A	MD	M	I	5680 N Fresno St Ste 105	NaN	Fresno	...	0.0	40	31	0.0	0.0	2	Interventional Pain Management	0.523798	0.413793	1
+2 rows × 98 columns
 {% endhighlight %}
 
-![Rplot-4](/figs/2017-03-25-Causes-of-Death/Rplot-4.png)
 
-In general, cancer affects male a little bit earlier than heart disease, at peak around 70 years old, heart disease affects more people at older age peak around 75 years old. 
-
-Only two diseases affect more yonger people than older people - Accidents and Suicide.  
-
-{% highlight r %}
-ggplot(aes(x = Age, y = Deaths, color = Cause), 
-       data = df_top_10[df_top_10$Gender == 'F',]) +
-  geom_smooth(method = 'loess') +
-  ggtitle('Causes of Death by Age for Female')
-{% endhighlight %}
-
-![Rplot-5](/figs/2017-03-25-Causes-of-Death/Rplot-5.png)
-
-Female developes heart disease more than 10 years later than male, at peak almost at 100 years old. Men appear more vulnerable to heart disease than the inaptly-named 'weaker sex'. As a result, they succumb earlier.
-
-### What the trend look like over time?
-
-A stacked area plot may help to display the trend and development of each cause of deaths over time. 
-
-{% highlight r %}
-ggplot(aes(x = Age, y = Deaths, color = Cause, fill = Cause), 
-       data = df_top_10) +
-  geom_area() +
-  ggtitle('Causes of Death by Age and Gender') +
-  facet_wrap(~Gender) +
-  theme_solarized()
-{% endhighlight %}
-
-![Rplot-6](/figs/2017-03-25-Causes-of-Death/Rplot-6.png)
-
-To see the trend over time, I downloaded a new dataset from [Centers for Disease Control and Prevention(CDC)](https://wonder.cdc.gov/ucd-icd10.html) and did some cleaning up. This dataset contains deaths, population, crude rate per 100,000 nationwide from 1999 to 2015.
-
-
-{% highlight r %}
-library(xlsx)
-mydata <- read.xlsx("mydata.xlsx", 1)
-mydata$NA. <- NULL
-
-ggplot(aes(x = Year, y = Deaths), data = mydata) +
-        geom_line(size = 2.5, alpha = 0.7, color = "mediumseagreen") +
-        geom_point(size = 0.5) + xlab("Year") + ylab("Number of deaths") +
-        ggtitle("Deaths in the US")
-{% endhighlight %}
-
-![Rplot-7](/figs/2017-03-25-Causes-of-Death/Rplot-7.png)
-
-Oh no! This is terrible. The number of death are going up! But the population of US has been growing. We should look at the per capita number of deaths. These things are typically measured per 100,000 population.
-
-{% highlight r %}
-ggplot(aes(x = Year, y = Crude_Rate_per_100K), data = mydata) +
-        geom_line(size = 2.5, alpha = 0.7, color = "mediumseagreen") +
-        geom_point(size = 0.5) + xlab("Year") + ylab("Number of deaths per 100,000 population") +
-        ggtitle("Deaths in the US")
-{% endhighlight %}
-
-![Rplot-8](/figs/2017-03-25-Causes-of-Death/Rplot-8.png)
 
 ## The End
 
