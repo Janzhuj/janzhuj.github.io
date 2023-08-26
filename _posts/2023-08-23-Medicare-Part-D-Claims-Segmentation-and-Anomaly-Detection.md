@@ -79,11 +79,28 @@ Suspicious claims of labeled drugs can be narrowed down to specific clusters: Cl
 
 As we know, the mean cost and prescription rate for specific drugs are incomparable among specialty types. Therefore, when diagnosing if a provider offers suspicious claims, we need to compare them within the same specialty type. In the instance below, let’s see if labeled drug claims from a specific specialty type in a suspicious cluster are significantly different from others. Firstly, we list the specialty types in the second cluster, which was labeled as high suspicious on Opioid claims, and pick up a specialty type that we are interested in - here, I choose family practice as an example - and then compare the key metrics among clusters.
 
-![14](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/14.jpg)
+![14-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/14-1.jpg)
+
+According to statistical description of data and boxplot, we confirmed that Claims in Clusters 2 were significant different from those in other clusters and also high suspicious on the opioid claims.
+
+Finally, we will demonstrate how to detect anomalous claims from a specified specialty. We taged cluster label into cleaned data,  selected claims data belonging to cluster 2, then groupby specialty type, abtain the number of providers, median value of mean cost and priscription rate of opioid, display all details into a scatter plot as shown in below. we can see that opioid claim details by each specialty type on hovering over a circle.  The specialty towards the upper right are the ones who offer opioid with high costs and priscription rate, and the circle size means the log2 number of providers in this specialty. 
+
+![15](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/15.jpg)
+
+I dived deeper into providers from Interventional Pain Management in cluster 2 for more detailed demonstration.    
+
+![16](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/16.jpg)
 
 
 
+can also select any other cluster for pinpointing at confounding providers. The scatter plot on the right side provides details of the provider on hovering over a circle. The providers/prescribers towards the far right are the ones who incur high costs. When their patient risk score is low, I consider them to be suspicious.
 
+
+
+### Mothed 1： direct method using scatter plot.
+
+
+### Method 2: Unsupervised Anomaly Detection
 
 let's take a example to search  prescibers for suspicious opiod claim on 
 
