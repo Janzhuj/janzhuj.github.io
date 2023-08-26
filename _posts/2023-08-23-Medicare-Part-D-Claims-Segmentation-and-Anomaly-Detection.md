@@ -87,7 +87,7 @@ Finally, we will demonstrate how to detect anomalous claims from a specified spe
 
 ### Mothed 1： direct method using scatter plot.
 
-We taged cluster label into cleaned data,  selected claims data belonging to cluster 2, then groupby specialty type, abtain the number of providers, median value of mean cost and priscription rate of opioid, display all details into a scatter plot as shown in below. we can see that opioid claim details by each specialty type on hovering over a circle.  The specialty towards the upper right are the ones who offer opioid with high costs and priscription rate, and the circle size means the log2 number of providers in this specialty. 
+We taged cluster label into cleaned data,  selected claims data belonging to cluster 2, then groupby specialty type, abtain the number of providers, median values of mean cost and priscription rate of opioids, display all details into a scatter plot as shown in below. we can see that opioid claim details by each specialty type on hovering over a circle.  The specialty towards the upper right are the ones who offer opioid with high costs and priscription rate, and the circle size means the log2 number of providers in this specialty. 
 
 ![15](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/15.jpg)
 
@@ -96,7 +96,9 @@ I dived deeper into claim information from Interventional Pain Management provid
 
 ### Method 2: Unsupervised Anomaly Detection
 
-![17-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-1.jpg)
+We also can use unsupervised anomaly detection methods to identify abnormal or unusual observations. The following graph display a comparison of the outlier detection algorithms, including K Nearest Neighbors (KNN), Histogram-base Outlier Detection (HBOS), Isolation Forest, Cluster-based Local Outlier Factor (CBLOF). 
+
+![17-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-2.jpg)
 
 Choosing one of above methods, we obtained a list of fraudulent prescribers.
 
