@@ -120,13 +120,8 @@ print(Opioid_imp.shape)
 Opioid_imp.head(2)
 {% endhighlight %}
 
-{% highlight text %}
-(56, 98)
-PRSCRBR_NPI	Prscrbr_Last_Org_Name	Prscrbr_First_Name	Prscrbr_MI	Prscrbr_Crdntls	Prscrbr_Gndr	Prscrbr_Ent_Cd	Prscrbr_St1	Prscrbr_St2	Prscrbr_City	...	Antpsyct_mean_cost	Opioid_Prscrbr_Rate_y	Opioid_LA_Prscrbr_Rate_y	Antbtc_Prscrbr_Rate	Antpsyct_Prscrbr_Rate	clusters	Prscrbr_Type_y	Opioid_mean_cost_scaled	Opioid_Prscrbr_Rate_scaled	outlier
-0	1003269242	Rivelis	Yulia	NaN	M.D.	F	I	3883 Airway Dr	NaN	Santa Rosa	...	0.0	17	19	0.0	0.0	2	Interventional Pain Management	0.033762	0.149425	1
-1	1013954130	Smith	Gregory	A	MD	M	I	5680 N Fresno St Ste 105	NaN	Fresno	...	0.0	40	31	0.0	0.0	2	Interventional Pain Management	0.523798	0.413793	1
-2 rows × 98 columns
-{% endhighlight %}
+![21](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/21.jpg)
+
 
 
 
