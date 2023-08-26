@@ -98,7 +98,7 @@ I dived deeper into claim information from Interventional Pain Management provid
 
 We also can use unsupervised anomaly detection methods to identify abnormal or unusual observations. The following graph display a comparison of the outlier detection algorithms, including K Nearest Neighbors (KNN), Histogram-base Outlier Detection (HBOS), Isolation Forest, Cluster-based Local Outlier Factor (CBLOF). 
 
-![17-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-2.jpg)
+![17-2](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-2.jpg)
 
 Choosing one of above methods, we obtained a list of fraudulent prescribers.
 
