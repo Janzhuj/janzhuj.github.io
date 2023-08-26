@@ -112,7 +112,7 @@ Providers (NPI) in Interventional Pain Management who probably perform abnormal 
  [1003269242, 1013954130, 1043297856, 1043303886, 1093753899, 1124137088, 1134348014, 1154345585, 1215000468, 1245264621, 1245438597, 1255305124, 1306038674, 1316941305, 1336170216, 1336180314, 1336432038, 1346230612, 1346274792, 1376907774, 1417189812, 1447200761, 1457351322, 1457418386, 1457434268, 1477565208, 1518922657, 1548273501, 1558353078, 1558501320, 1568410900, 1568585081, 1568677300, 1619934858, 1619950375, 1639167091, 1669662151, 1679511638, 1679572994, 1689600041, 1699717181, 1730400193, 1750451258, 1780874446, 1801819206, 1821088451, 1831457357, 1891775961, 1891781753, 1902005721, 1912993478, 1932109170, 1932182763, 1942599253, 1992702039, 1992904528]
 {% endhighlight %}
 
-By selecting suspicious National Provider Identifier (NPI) of providers from original dataset, we obtain the detailed information of each interventional pain management provider with fraudulent behavior. 
+By selecting speicaled providers NPI from original dataset, we obtain the detailed information of each interventional pain management provider with fraudulent behavior. 
 
 {% highlight r %}
 Opioid_imp = df.merge(Opioid_imp_1, how='inner',left_on='PRSCRBR_NPI', right_on='PRSCRBR_NPI')
@@ -122,13 +122,6 @@ Opioid_imp.head(2)
 
 ![21](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/21.jpg)
 
-
-
-
 ## The End
 
-The death rate had been declining for years, an effect of improvement for health and disease control and technology. Until a few years ago, it has been raising in the recent years. If we want more accurate data, we will need the age-adjusted death rate for the total population because [the birth rate in the US drops to the lowest point](http://www.cnn.com/2016/08/11/health/us-lowest-fertility-rate/). The population 10 years ago was yonger than the population now. 
-
-That's all for now, next time, probably state by state.
-
-The souce code used to create this blog can be found here.
+The souce code used to create this blog can be found in my github.
