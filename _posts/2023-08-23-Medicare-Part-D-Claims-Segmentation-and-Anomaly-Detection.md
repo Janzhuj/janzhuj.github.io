@@ -91,9 +91,13 @@ We taged cluster label into cleaned data,  selected claims data belonging to clu
 
 ![15](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/15.jpg)
 
-I dived deeper into providers from Interventional Pain Management in cluster 2 for more detailed demonstration.    
-
+I dived deeper into claim information from Interventional Pain Management providers in cluster 2 to detect anomalous ones among this specalty type. Here, I used upper boundary line to seperate outliners from normal data. Any claim located in the suspicious data region is anormaly data. we can see that anomalous claim details by each provider on hovering over a circle.      
 ![16](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/16.jpg)
+
+### Method 2: Unsupervised Anomaly Detection
+
+![17-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/17-1.jpg)
+
 
 
 
@@ -104,7 +108,7 @@ can also select any other cluster for pinpointing at confounding providers. The 
 
 
 
-### Method 2: Unsupervised Anomaly Detection
+
 
 let's take a example to search  prescibers for suspicious opiod claim on 
 
