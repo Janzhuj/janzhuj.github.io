@@ -103,12 +103,12 @@ Choosing one of above methods, we obtained a list of fraudulent prescribers.
 {% highlight r %}
 df_ipm['outlier'] = y_pred_IForest.tolist()
 Opioid_imp_1 = df_ipm.loc[df_ipm['outlier'] == 1]
-print('Providers (NPI) in Interventional Pain Management who probably perform abnormal Opioid drugs on the claim:\n', 
+print('List Providers (NPI) in Interventional Pain Management who offered anomaly opioid drugs on the claim:\n', 
       list(Opioid_imp_1.PRSCRBR_NPI))
 {% endhighlight %}
 
 {% highlight text %}
-Providers (NPI) in Interventional Pain Management who probably perform abnormal Opioid drugs on the claim:
+List Providers (NPI) in Interventional Pain Management who offered anomaly opioid drugs on the claim:
  [1003269242, 1013954130, 1043297856, 1043303886, 1093753899, 1124137088, 1134348014, 1154345585, 1215000468, 1245264621, 1245438597, 1255305124, 1306038674, 1316941305, 1336170216, 1336180314, 1336432038, 1346230612, 1346274792, 1376907774, 1417189812, 1447200761, 1457351322, 1457418386, 1457434268, 1477565208, 1518922657, 1548273501, 1558353078, 1558501320, 1568410900, 1568585081, 1568677300, 1619934858, 1619950375, 1639167091, 1669662151, 1679511638, 1679572994, 1689600041, 1699717181, 1730400193, 1750451258, 1780874446, 1801819206, 1821088451, 1831457357, 1891775961, 1891781753, 1902005721, 1912993478, 1932109170, 1932182763, 1942599253, 1992702039, 1992904528]
 {% endhighlight %}
 
