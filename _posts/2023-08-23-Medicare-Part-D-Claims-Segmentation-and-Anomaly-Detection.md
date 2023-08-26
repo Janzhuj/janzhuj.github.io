@@ -83,7 +83,11 @@ As we know, the mean cost and prescription rate for specific drugs are incompara
 
 According to statistical description of data and boxplot, we confirmed that Claims in Clusters 2 were significant different from those in other clusters and also high suspicious on the opioid claims.
 
-Finally, we will demonstrate how to detect anomalous claims from a specified specialty. We taged cluster label into cleaned data,  selected claims data belonging to cluster 2, then groupby specialty type, abtain the number of providers, median value of mean cost and priscription rate of opioid, display all details into a scatter plot as shown in below. we can see that opioid claim details by each specialty type on hovering over a circle.  The specialty towards the upper right are the ones who offer opioid with high costs and priscription rate, and the circle size means the log2 number of providers in this specialty. 
+Finally, we will demonstrate how to detect anomalous claims from a specified specialty. 
+
+### Mothed 1： direct method using scatter plot.
+
+We taged cluster label into cleaned data,  selected claims data belonging to cluster 2, then groupby specialty type, abtain the number of providers, median value of mean cost and priscription rate of opioid, display all details into a scatter plot as shown in below. we can see that opioid claim details by each specialty type on hovering over a circle.  The specialty towards the upper right are the ones who offer opioid with high costs and priscription rate, and the circle size means the log2 number of providers in this specialty. 
 
 ![15](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/15.jpg)
 
@@ -97,7 +101,7 @@ can also select any other cluster for pinpointing at confounding providers. The 
 
 
 
-### Mothed 1： direct method using scatter plot.
+
 
 
 ### Method 2: Unsupervised Anomaly Detection
