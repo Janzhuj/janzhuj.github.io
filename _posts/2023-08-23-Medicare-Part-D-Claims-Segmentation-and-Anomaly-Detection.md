@@ -58,7 +58,7 @@ The details of six clusters and  key metrics' centriods for each cluster were sh
 I conducted some descriptive statistics analysis for key metrics. By analyzing those statistics information with boxplot, I identify some patterns for each cluster. 
 
 {% highlight r %}
-print ("Opioid_LA_mean_cost describles by clusters")
+print ("Opioid_LA_mean_cost describled by clusters")
 for  i in range(0,6):
     print ("Cluster:", str(i))
     print(df_clean.Opioid_LA_mean_cost[df_clean['clusters']==i].describe())
