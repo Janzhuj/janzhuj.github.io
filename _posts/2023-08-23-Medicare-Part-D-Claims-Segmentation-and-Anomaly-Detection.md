@@ -13,7 +13,7 @@ When our aim is to identify suspicious claims, we face a problem:  there is an o
 
 Where can we get the data? The actual patient claim data is protected and not available to the public. However, [the Centers for Medicare and Medicaid Services (CMS)](https://data.cms.gov/search) provide aggregated claim data at the provider level. This data contains information on prescription drugs provided to Medicare beneficiaries by providers, as well as the demographics of the providers. In this case, I will use the Medicare Part D claim dataset.
 
-## Exploratory data analysis
+## Exploratory Data Analysis
 
 Here is an overview of overall Medicare Part D Prescibers scenario in the US. We can see the number of providers in each state in 2021, and the claims percentage by drug label, brand, insurance plan, and subsidy. We can also easily identify the specialty with the most providers, claims, and costs. In addition, we have a histogram to show us the average health condition of bentificiaries.
 
