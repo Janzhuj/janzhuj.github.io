@@ -71,8 +71,6 @@ for name in df_clean.columns[:-1]:
     plt.show()
 {% endhighlight %}
 
-![12](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/12.png)
-
 ![13](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/13.jpg)
 
 Suspicious claims of labeled drugs can be narrowed down to specific clusters: Claims with high mean cost and low prescription rate for opioids, as well as high mean cost and high prescription rate for long-acting opioids, were grouped into the second cluster. Claims with high mean cost and low prescription rate for antibiotics were grouped into the third cluster. Claims with high mean cost and high prescription rate for antipsychotics were grouped into the fourth cluster. By narrowing the scope of our search, we can identify fraudulent prescribers from highly suspicious clusters more quickly and precisely.
@@ -91,7 +89,7 @@ We taged cluster label into cleaned data,  selected claims data belonging to clu
 
 ![15](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/15.jpg)
 
-I dived deeper into claim information from Interventional Pain Management providers in cluster 2 to detect anomalous ones among this specalty type. Here, I used upper boundary line to seperate outliners from normal data. Any claim located in the suspicious data region is anormaly data. we can see that anomalous claim details by each provider on hovering over a circle.      
+I dived deeper into claim information from Interventional Pain Management providers in cluster 2 to detect anomalous ones among this specalty type. Here, I used upper boundary line to seperate outliners from normal data. Any claim located in the suspicious data region is anomaly data. we can see that anomalous claim details by each provider on hovering over a circle.      
 ![16](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/16.jpg)
 
 ### Method 2: Unsupervised Anomaly Detection
