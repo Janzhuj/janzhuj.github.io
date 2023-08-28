@@ -13,6 +13,8 @@ When our aim is to identify suspicious claims, we face a problem:  there is an o
 
 Where can we get the data? The actual patient claim data is protected and not available to the public. However, [the Centers for Medicare and Medicaid Services (CMS)](https://data.cms.gov/search) provide aggregated claim data at the provider level. This data contains information on prescription drugs provided to Medicare beneficiaries by providers, as well as the demographics of the providers. In this case, I will use the Medicare Part D claim dataset.
 
+## Exploratory data analysis
+
 Here is an overview of overall Medicare Part D Prescibers scenario in the US. We can see the number of providers in each state in 2021, and the claims percentage by drug label, brand, insurance plan, and subsidy. We can also easily identify the specialty with the most providers, claims, and costs. In addition, we have a histogram to show us the average health condition of bentificiaries.
 
 ![1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/1.png)
@@ -34,6 +36,8 @@ During the exploratory data analysis section, I found that four labeled drugs - 
 Wow, some features had high positive correlation. After some study, I decide to use  mean cost, and prescriber rate as key metrics. Now, there were no high correlated features.
 
 ![8](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/8.png)
+
+##  Claims Segmentation
 
 I applied k-means clustering to partition claim data into k clusters in which each observation belonged to the cluster with the nearest centroid, and used KElbowVisualizer to identify optimum number of clusters. As shown in below, I decided that 6 is the optimum number of clusters.
 
@@ -81,6 +85,8 @@ As we know, the mean cost and prescription rate for specific drugs are incompara
 ![14-1](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/14-1.jpg)
 
 According to statistical description of data and boxplot, we confirmed that Claims in Clusters 2 were significant different from those in other clusters and also high suspicious on the opioid claims.
+
+## Anomaly Detection
 
 Finally, we will demonstrate how to detect anomalous claims from a specified specialty. 
 
