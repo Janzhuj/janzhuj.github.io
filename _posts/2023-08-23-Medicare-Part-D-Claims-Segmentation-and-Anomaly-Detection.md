@@ -64,12 +64,78 @@ for  i in range(0,6):
     print(df_clean.Opioid_LA_mean_cost[df_clean['clusters']==i].describe())
 {% endhighlight %}
 
+{% highlight text %}
+Opioid_LA_mean_cost describles by clusters
+Cluster: 0
+count    904002.000000
+mean          2.529039
+std          17.214296
+min           0.000000
+25%           0.000000
+50%           0.000000
+75%           0.000000
+max         370.916667
+Name: Opioid_LA_mean_cost, dtype: float64
+Cluster: 1
+count    209337.000000
+mean          0.001674
+std           0.427191
+min           0.000000
+25%           0.000000
+50%           0.000000
+75%           0.000000
+max         130.461538
+Name: Opioid_LA_mean_cost, dtype: float64
+Cluster: 2
+count    44060.000000
+mean       280.528288
+std        288.295383
+min          0.000000
+25%        102.277484
+50%        212.610023
+75%        361.664429
+max       7794.739130
+Name: Opioid_LA_mean_cost, dtype: float64
+Cluster: 3
+count    7582.000000
+mean        2.641885
+std        28.121966
+min         0.000000
+25%         0.000000
+50%         0.000000
+75%         0.000000
+max      1145.500000
+Name: Opioid_LA_mean_cost, dtype: float64
+Cluster: 4
+count    32575.000000
+mean         1.869954
+std         19.745856
+min          0.000000
+25%          0.000000
+50%          0.000000
+75%          0.000000
+max        873.250000
+Name: Opioid_LA_mean_cost, dtype: float64
+Cluster: 5
+count    89898.000000
+mean         6.250518
+std         30.914968
+min          0.000000
+25%          0.000000
+50%          0.000000
+75%          0.000000
+max        456.357143
+Name: Opioid_LA_mean_cost, dtype: float64
+{% endhighlight %}
+
 {% highlight r %}
 for name in df_clean.columns[:-1]:
     sns.set(rc={"figure.figsize":(8, 4)})
     sns.boxplot(x="clusters",y=name, data=df_clean).set_title(name + " vs. Clusters")
     plt.show()
 {% endhighlight %}
+
+![12](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/12.jpg)
 
 ![13](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/13.jpg)
 
