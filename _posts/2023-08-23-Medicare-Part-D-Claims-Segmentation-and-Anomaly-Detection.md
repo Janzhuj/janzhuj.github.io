@@ -29,7 +29,7 @@ Here is an overview of overall Medicare Part D Prescibers scenario in the US. We
 
 ![6](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/6.png)
 
-During the exploratory data analysis section, I found that four labeled drugs - opioids, antibiotics, long-acting opioids, and antipsychotics for the elderly - accounted for 2.82% of the total drug cost. Therefore, when it comes to detecting fraudulent behavior by prescribers for labeled drugs, I selected related features to avoid interference from irrelevant information.
+During the exploratory data analysis section, I found that four labeled drugs - opioids, antibiotics, long-acting opioids, and antipsychotics for the elderly - accounted for 3.69% of the total drug cost. Therefore, when it comes to detecting fraudulent behavior by prescribers for labeled drugs, I selected related features to avoid interference from irrelevant information.
 
 ![7](/figs/2023-08-23-Medicare-Part-D-Claims-Segmentation-and-Anomaly-Detection/7.png)
 
