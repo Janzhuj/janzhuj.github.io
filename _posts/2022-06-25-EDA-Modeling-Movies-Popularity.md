@@ -1,47 +1,32 @@
 ---
 layout: post
-title: "Online Store Customer Segmentation"
-excerpt: "Clustering, RFM Analysis, R"
+title: "Exploratory Data Analysis and Predicting for Popular Film Genres"
+excerpt: "EDA, Regression, Machine Learning, R"
 tags: [rstats]
 share: true
 comments: true
 ---
 
-In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy based on the specific segments. I will be using a widely known data set from [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
+In this post, I will investigate [movies datasets]([https://archive.ics.uci.edu/dataset/502/online+retail+ii](https://www.kaggle.com/datasets/nichen301/movie-data)) randomly sampled from Rotten Tomatos and IMDB. The purpose of the project is to identify which factors and attributes make movies popular, and develop models to predict audience responses for new movies.
 
-First let’s load the required packages.
+## Load packages.
 
 {% highlight r %}
-library(tidyverse)  
-library(readxl) 
-library(kableExtra)
-library(flextable)
-library(DataExplorer) 
+library(tidyverse)
 library(dlookr) 
-library(highcharter) 
-library(tm) 
-library(wordcloud)
-library(corrplot) 
-library(viridis) 
-library(xts)
-library(rfm) 
-library(clustertend) 
-library(factoextra)
-library(NbClust)  
-library(clValid)
-library(fpc) 
+library(gridExtra)
+library(corrplot)
+library(caTools)
+library(caret)
+library(mlbench)
+library("gbm")
+library(Metrics)
 {% endhighlight %}
 
-Load the dataset and take a quick look.
+## Load the dataset and take a quick look.
 
 {% highlight r %}
-df<-read_excel("Online_Retail.xlsx")
-head(df,5)
-str(df)
-summary(df) %>% kable() %>% kable_styling()
-n_distinct(df$CustomerID) 
-n_distinct(df$Description)
-n_distinct(df$Country)
+load("movies.RData")
 {% endhighlight %}
 
 The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
