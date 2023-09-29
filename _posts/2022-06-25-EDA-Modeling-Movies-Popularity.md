@@ -43,10 +43,14 @@ head(movies,2)
 
 The data set is comprised of 651 randomly sampled movies produced and released before 2016, Each record in the database describes characteristics of a movie.Some of these variables are only there for informational purposes and do not make any sense to include in a statistical analysis, For example information in the the actor1 through actor5 variables was used to determine whether the movie casts an actor or actress who won a best actor or actress Oscar. We select and create some new variables that might be meaningful to identify the popularity of movies.
 
-title_type: Type of movie (Documentary, Feature Film, TV Movie)
-genre: Genre of movie (Action & Adventure, Comedy, Documentary, Drama, Horror, Mystery & Suspense, Other)
-runtime: Runtime of movie (in minutes)
-mpaa_rating: MPAA rating of the movie (G, PG, PG-13, R, Unrated)
+> title_type: Type of movie (Documentary, Feature Film, TV Movie)
+
+> genre: Genre of movie (Action & Adventure, Comedy, Documentary, Drama, Horror, Mystery & Suspense, Other)
+
+* runtime: Runtime of movie (in minutes)
+
+. mpaa_rating: MPAA rating of the movie (G, PG, PG-13, R, Unrated)
+
 imdb_rating: Rating on IMDB
 imdb_num_votes: Number of votes on IMDB
 critics_rating: Categorical variable for critics rating on Rotten Tomatoes (Certified Fresh, Fresh, Rotten)
