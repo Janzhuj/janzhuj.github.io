@@ -72,7 +72,7 @@ movies <- movies %>%
 movies <- movies %>% 
   mutate(summer_season = as.factor(ifelse(thtr_rel_month %in% c('6', '7', '8'), 'yes', 'no')))
 
-# Abstracting meaningful features.
+# Extracting meaningful features.
 movies_new <- movies %>% select(title_type, genre, runtime, mpaa_rating, imdb_rating, imdb_num_votes, critics_rating, critics_score, audience_rating, audience_score, best_pic_win, best_actor_win, best_actress_win, best_dir_win, top200_box, oscar_season, summer_season)
 {% endhighlight %}
 
@@ -87,7 +87,7 @@ plot_na_pareto(movies_new)
 Number of missing value: 1 
 {% endhighlight %}
 
-![Rplot-0](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot_0.jpeg)
+![Rplot-0](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-0.jpeg)
 
 {% highlight r %}
 movies_new<-movies_new %>%
@@ -114,7 +114,7 @@ summary(train)
 sapply(train, class)
 {% endhighlight %}
 
-{% highlight r %}
+{% highlight text %}
         title_type                 genre        runtime       mpaa_rating   imdb_rating    imdb_num_votes           critics_rating critics_score   
  Documentary : 44   Drama             :255   Min.   : 39.0   G      : 16   Min.   :1.900   Min.   :   180   Certified Fresh: 99    Min.   :  1.00  
  Feature Film:473   Comedy            : 63   1st Qu.: 92.0   NC-17  :  2   1st Qu.:5.900   1st Qu.:  4375   Fresh          :173    1st Qu.: 32.00  
@@ -138,6 +138,23 @@ sapply(train, class)
    summer_season 
         "factor"                  
 {% endhighlight %}
+
+### Correlation between categorical attributes and audience score
+{% highlight r %}
+names <- names(Filter(is.factor,train))
+plot_list <- list()
+
+for (name in names) {
+  plot <- ggplot(data = train, aes_string(x = name, y = train$audience_score, fill = name)) + 
+    geom_boxplot(show.legend=FALSE) + ggtitle(paste("Audience Score in", name, sep=" ")) + 
+    xlab(name) + 
+    ylab('Audience Score')
+  plot_list[[name]] <- plot
+}
+plot_grob <- arrangeGrob(grobs=plot_list, ncol=3)
+grid.arrange(plot_grob)
+{% endhighlight %}
+
 
 ![Rplot-2](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-2.png)
 
