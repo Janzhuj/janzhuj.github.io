@@ -262,15 +262,124 @@ train_cat <- as.data.frame(train[names[1:6]])
 train_trans <-cbind(train_cat, transformed)
 {% endhighlight %}
 
+Two predictors - critics score and imdb rating are highly correlated at 0.76 (collinearity). One of them will be removed from the model.
+
+## 4: Modeling
+
+### 4.1 Statistical regression modeling
+
+#### Full model
+
+{% highlight r %}
+full_model <- lm(audience_score~ title_type + genre + mpaa_rating + critics_rating + audience_rating + best_pic_win + 
+                   runtime + imdb_rating + imdb_num_votes, data=train_trans)
+summary(full_model)
+{% endhighlight %}
+
+{% highlight text %}
+Call:
+lm(formula = audience_score ~ title_type + genre + mpaa_rating + 
+    critics_rating + audience_rating + best_pic_win + runtime + 
+    imdb_rating + imdb_num_votes, data = train_trans)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.04700 -0.21807  0.02147  0.20043  1.06860 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                    -0.69458    0.17200  -4.038 6.24e-05 ***
+title_typeFeature Film          0.21918    0.14044   1.561   0.1193    
+title_typeTV Movie              0.15519    0.21825   0.711   0.4774    
+genreAnimation                  0.12235    0.13665   0.895   0.3710    
+genreArt House & International -0.24115    0.11405  -2.114   0.0350 *  
+genreComedy                     0.04441    0.06470   0.686   0.4927    
+genreDocumentary                0.07563    0.14832   0.510   0.6103    
+genreDrama                     -0.04539    0.05655  -0.803   0.4225    
+genreHorror                    -0.12029    0.09335  -1.289   0.1982    
+genreMusical & Performing Arts  0.17789    0.12421   1.432   0.1527    
+genreMystery & Suspense        -0.13796    0.07315  -1.886   0.0599 .  
+genreOther                      0.02849    0.10286   0.277   0.7819    
+genreScience Fiction & Fantasy -0.03869    0.11998  -0.323   0.7472    
+mpaa_ratingNC-17               -0.02845    0.25227  -0.113   0.9103    
+mpaa_ratingPG                   0.01334    0.09859   0.135   0.8924    
+mpaa_ratingPG-13               -0.01926    0.10257  -0.188   0.8512    
+mpaa_ratingR                   -0.01395    0.09806  -0.142   0.8870    
+mpaa_ratingUnrated              0.04496    0.11314   0.397   0.6912    
+critics_ratingFresh            -0.01281    0.04598  -0.279   0.7806    
+critics_ratingRotten           -0.03263    0.05068  -0.644   0.5200    
+audience_ratingUpright          0.94581    0.04243  22.293  < 2e-16 ***
+best_pic_winyes                -0.17528    0.19738  -0.888   0.3750    
+runtime                        -0.02930    0.01715  -1.708   0.0882 .  
+imdb_rating                     0.56208    0.02693  20.872  < 2e-16 ***
+imdb_num_votes                 -0.00727    0.02051  -0.354   0.7231    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3276 on 496 degrees of freedom
+Multiple R-squared:  0.8976,	Adjusted R-squared:  0.8927 
+F-statistic: 181.2 on 24 and 496 DF,  p-value: < 2.2e-16
+{% endhighlight %}
+
+
+#### Obtain final model by backward stepwise selection
+
+{% highlight r %}
+newmodel <- step(full_model, direction = "backward", trace=FALSE) 
+summary(newmodel)
+{% endhighlight %}
+
+{% highlight text %}
+Call:
+lm(formula = audience_score ~ audience_rating + runtime + imdb_rating, 
+    data = train_trans)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.81959 -0.23632  0.01982  0.20731  1.01312 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(>|t|)    
+(Intercept)            -0.56121    0.02801 -20.033   <2e-16 ***
+audience_ratingUpright  0.97140    0.04160  23.352   <2e-16 ***
+runtime                -0.03095    0.01490  -2.076   0.0384 *  
+imdb_rating             0.54695    0.02106  25.977   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3286 on 517 degrees of freedom
+Multiple R-squared:  0.8927,	Adjusted R-squared:  0.8921 
+F-statistic:  1433 on 3 and 517 DF,  p-value: < 2.2e-16
+{% endhighlight %}
+
+#### Model diagnostics
+
+{% highlight r %}
+p1<-ggplot(data = newmodel, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  xlab("Fitted values") +
+  ylab("Residuals")
+
+p2<-ggplot(data = newmodel, aes(x = .resid)) +
+  geom_histogram(binwidth = 0.05, fill='white', color='black') +
+  xlab("Residuals")
+
+p3<-ggplot(data = newmodel, aes(sample = .resid)) +
+  stat_qq()
+
+grid.arrange(p1,p2,p3, ncol=2)
+{% endhighlight %}
+
+![Rplot-4](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-4.jpeg)
+
+![Rplot-4](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-4.jpeg)
 
 
 
 
 
 
-![Rplot-3](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-3.png)
-
-![Rplot-4](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-4.png)
 
 {% highlight r %}
 # Check minimum UnitPrice
