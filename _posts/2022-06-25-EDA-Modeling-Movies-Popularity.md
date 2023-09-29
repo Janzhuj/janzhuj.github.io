@@ -155,7 +155,9 @@ sapply(train, class)
         "factor"                  
 {% endhighlight %}
 
-### 2.2 Correlation between categorical feature and audience score
+### 2.2 Data Visualizations
+
+#### Correlation between categorical feature and audience score
 
 {% highlight r %}
 names <- names(Filter(is.factor,train))
@@ -163,9 +165,7 @@ plot_list <- list()
 
 for (name in names) {
   plot <- ggplot(data = train, aes_string(x = name, y = train$audience_score, fill = name)) + 
-    geom_boxplot(show.legend=FALSE) + ggtitle(paste("Audience Score in", name, sep=" ")) + 
-    xlab(name) + 
-    ylab('Audience Score')
+    geom_boxplot(show.legend=FALSE) + xlab(name) + ylab('Audience Score')
   plot_list[[name]] <- plot
 }
 plot_grob <- arrangeGrob(grobs=plot_list, ncol=3)
@@ -174,8 +174,27 @@ grid.arrange(plot_grob)
 
 ![Rplot-1](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-1.jpeg)
 
+As we know, if median value lines from two different boxplots do not overlap, then there is a statistically significant difference between the medians. Therefore, it looks that best_actor_win, best_actress_win, best_dir_win, top200_box, oscar_season and summer_season do not seem to have much impact on audience_score.
 
-![Rplot-2](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-2.png)
+#### Bar plot of categorical features  
+
+{% highlight r %}
+plot_list2 <- list()
+for (name in names[1:6]) {
+  plot <- ggplot(aes_string(x=name), data=train) + geom_bar(aes(y=100*(..count..)/sum(..count..))) + ylab('percentage')  +
+    ggtitle(name) + coord_flip()
+  plot_list2[[name]] <- plot
+}
+plot_grob2 <- arrangeGrob(grobs=plot_list2, ncol=2)
+grid.arrange(plot_grob2)
+{% endhighlight %}
+
+Critics_rating, audience_rating have observations spread out fairly evenly over all categories shows high variability, while  "title_type", "genre",  "mpaa_rating" and "best_pic_win"  where most observations are only in one or a handful of categories displays low variability.
+
+![Rplot](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-1.jpeg)
+
+
+
 
 ![Rplot-3](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-3.png)
 
