@@ -218,6 +218,26 @@ grid.arrange(hisplot_grob)
 
 The distribution of attribute imdb_num_votes is right skewed, will be shifted by using The BoxCox transform to reduce the skew and make it more Gaussian 
 
+#### Correlation between numerical attributes
+
+{% highlight r %}
+corr.matrix <- cor(train[names_n])
+corrplot(corr.matrix, main="\n\nCorrelation Plot of numerical attributes", method="number")
+{% endhighlight %}
+
+#### Summary of Ideas
+There is a lot of structure in this dataset. We need to think about transforms that we could use later to better expose the structure which in turn may improve modeling accuracy. So far it would be worth trying:
+
+* Feature selection and removing the most correlated attributes.
+* standardizing the dataset to reduce the effect of differing scales and distributions.
+* Box-Cox transform to see if flattening out some of the distributions improves accuracy.
+
+
+
+
+
+
+
 
 ![Rplot-3](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-3.png)
 
