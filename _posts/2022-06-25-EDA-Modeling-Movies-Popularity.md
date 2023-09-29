@@ -229,6 +229,40 @@ There is a lot of structure in this dataset. We need to think about transforms t
 
 
 
+## 3. Data transformation
+
+{% highlight r %}
+sapply(train[names_n],class)
+train$imdb_num_votes <- as.numeric(train$imdb_num_votes)
+train_num <- as.data.frame(train[names_n])
+# calculate the pre-process parameters from the dataset
+preprocessParams <- preProcess(train_num, method=c("center","scale","BoxCox")) # Standardize and power transform
+# summarize transform parameters
+print(preprocessParams)
+{% endhighlight %}
+
+{% highlight text %}
+Created from 521 samples and 5 variables
+Pre-processing:
+  - Box-Cox transformation (5)
+  - centered (5)
+  - ignored (0)
+  - scaled (5)
+Lambda estimates for Box-Cox transformation:
+-0.1, 2, 0, 0.9, 1.3
+{% endhighlight %}
+
+{% highlight r %}
+# transform the dataset using the parameters
+transformed <- predict(preprocessParams, train_num)
+# summarize the transformed dataset
+summary(transformed)
+train_cat <- as.data.frame(train[names[1:6]])
+# combine two datasets in r
+train_trans <-cbind(train_cat, transformed)
+{% endhighlight %}
+
+
 
 
 
