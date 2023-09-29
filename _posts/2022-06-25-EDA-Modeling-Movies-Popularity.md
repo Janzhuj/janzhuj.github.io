@@ -268,7 +268,7 @@ Two predictors - critics score and imdb rating are highly correlated at 0.76 (co
 
 ### 4.1 Statistical regression modeling
 
-#### Full model
+#### 4.1.1 Develop Full model
 
 {% highlight r %}
 full_model <- lm(audience_score~ title_type + genre + mpaa_rating + critics_rating + audience_rating + best_pic_win + 
@@ -322,7 +322,7 @@ F-statistic: 181.2 on 24 and 496 DF,  p-value: < 2.2e-16
 {% endhighlight %}
 
 
-#### Obtain final model by backward stepwise selection
+#### 4.1.2 Obtain final model by backward stepwise selection
 
 {% highlight r %}
 newmodel <- step(full_model, direction = "backward", trace=FALSE) 
@@ -352,7 +352,7 @@ Multiple R-squared:  0.8927,	Adjusted R-squared:  0.8921
 F-statistic:  1433 on 3 and 517 DF,  p-value: < 2.2e-16
 {% endhighlight %}
 
-#### Model diagnostics
+#### 4.1.3 Model diagnostics
 
 {% highlight r %}
 p1<-ggplot(data = newmodel, aes(x = .fitted, y = .resid)) +
@@ -360,24 +360,182 @@ p1<-ggplot(data = newmodel, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   xlab("Fitted values") +
   ylab("Residuals")
-
 p2<-ggplot(data = newmodel, aes(x = .resid)) +
   geom_histogram(binwidth = 0.05, fill='white', color='black') +
   xlab("Residuals")
-
 p3<-ggplot(data = newmodel, aes(sample = .resid)) +
   stat_qq()
-
 grid.arrange(p1,p2,p3, ncol=2)
 {% endhighlight %}
 
-![Rplot-4](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-4.jpeg)
+![Rplot-5](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-5.jpeg)
 
-![Rplot-4](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-4.jpeg)
+### 4.2 Machine learning modeling
+
+{% highlight r %}
+# Run algorithms using 10-fold cross validation
+trainControl <- trainControl(method="repeatedcv", number=10, repeats=3)
+metric <- "RMSE"
+{% endhighlight %}
+
+### 4.2.1 Evaluate Algorithms: Baseline
+
+{% highlight r %}
+# lm
+set.seed(7)
+fit.lm <- train(audience_score~., data=train_trans, method="lm", metric=metric, trControl=trainControl)
+# GLM
+set.seed(7)
+fit.glm <- train(audience_score~., data=train_trans, method="glm", metric=metric,trControl=trainControl)
+# GLMNET
+set.seed(7)
+fit.glmnet <- train(audience_score~., data=train_trans, method="glmnet", metric=metric,trControl=trainControl)
+# SVM
+set.seed(7)
+fit.svm <- train(audience_score~., data=train_trans, method="svmRadial", metric=metric,trControl=trainControl)
+# CART
+set.seed(7)
+grid <- expand.grid(.cp=c(0, 0.05, 0.1))
+fit.cart <- train(audience_score~., data=train_trans, method="rpart", metric=metric,trControl=trainControl)
+# KNN
+set.seed(7)
+fit.knn <- train(audience_score~., data=train_trans, method="knn", metric=metric, trControl=trainControl)
+# Compare algorithms
+results <- resamples(list(LM=fit.lm, GLM=fit.glm, GLMNET=fit.glmnet, SVM=fit.svm,
+                                  CART=fit.cart, KNN=fit.knn))
+summary(results)
+dotplot(results)
+{% endhighlight %}
+
+{% highlight text %}
+Call:
+summary.resamples(object = results)
+
+Models: LM, GLM, GLMNET, SVM, CART, KNN 
+Number of resamples: 30 
+
+MAE 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+LM     0.2310122 0.2574136 0.2707121 0.2691965 0.2811378 0.3160800    0
+GLM    0.2310122 0.2574136 0.2707121 0.2691965 0.2811378 0.3160800    0
+GLMNET 0.2310285 0.2507154 0.2657281 0.2667189 0.2803855 0.3135265    0
+SVM    0.2502105 0.2889786 0.3066764 0.3063318 0.3253994 0.3615967    0
+CART   0.2847380 0.3164592 0.3268184 0.3352146 0.3630442 0.3915826    0
+KNN    0.2769875 0.3192514 0.3349857 0.3449373 0.3705548 0.4476559    0
+
+RMSE 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+LM     0.2985992 0.3177708 0.3337284 0.3392684 0.3545900 0.4078148    0
+GLM    0.2985992 0.3177708 0.3337284 0.3392684 0.3545900 0.4078148    0
+GLMNET 0.2927227 0.3112989 0.3268975 0.3318891 0.3509410 0.3937352    0
+SVM    0.3359649 0.3573947 0.3972685 0.4064684 0.4496446 0.5342493    0
+CART   0.3459187 0.3843745 0.4044279 0.4088604 0.4319131 0.4731897    0
+KNN    0.3535716 0.3874186 0.4268215 0.4325818 0.4733186 0.5664905    0
+
+Rsquared 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+LM     0.8476737 0.8785521 0.8876114 0.8884304 0.9003625 0.9281463    0
+GLM    0.8476737 0.8785521 0.8876114 0.8884304 0.9003625 0.9281463    0
+GLMNET 0.8580913 0.8801078 0.8948029 0.8932897 0.9024593 0.9299116    0
+SVM    0.7562335 0.8061196 0.8505634 0.8405477 0.8751151 0.9007095    0
+CART   0.8023546 0.8183961 0.8387880 0.8374483 0.8567945 0.8821153    0
+KNN    0.7146806 0.7904845 0.8292025 0.8180365 0.8423670 0.8996817    0
+{% endhighlight %}
+
+![Rplot_baseline](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot_baseline.jpeg)
+
+#### 4.2.2 Evaluate Algorithms: Feature Selection
+
+{% highlight r %}
+# Find and drop attributes that are highly corrected
+set.seed(7)
+cutoff <- 0.70
+correlations <- cor(train_trans[,7:10])
+highlyCorrelated <- findCorrelation(correlations, cutoff=cutoff)
+for (value in highlyCorrelated) {
+  print(names(train_trans[,7:10])[value])
+}
+{% endhighlight %}
+
+{% highlight text %}
+[1] "imdb_rating"
+{% endhighlight %}
+
+We can see that we have dropped 1 attributes: imdb_rating.
+
+{% highlight r %}
+# create a new dataset without highly corrected features
+datasetFeatures <- train_trans[,-highlyCorrelated]
+dim(datasetFeatures)
+{% endhighlight %}
+
+{% highlight r %}
+# lm
+set.seed(7)
+fit.lm <- train(audience_score~., data=datasetFeatures, method="lm", metric=metric, trControl=trainControl)
+# GLM Generalized Linear Regression
+set.seed(7)
+fit.glm <- train(audience_score~., data=datasetFeatures, method="glm", metric=metric,trControl=trainControl)
+# GLMNET Penalized Linear Regression
+set.seed(7)
+fit.glmnet <- train(audience_score~., data=datasetFeatures, method="glmnet", metric=metric,trControl=trainControl)
+# SVM
+set.seed(7)
+fit.svm <- train(audience_score~., data=datasetFeatures, method="svmRadial", metric=metric,trControl=trainControl)
+# CART Classification and Regression Trees
+set.seed(7)
+grid <- expand.grid(.cp=c(0, 0.05, 0.1))
+fit.cart <- train(audience_score~., data=datasetFeatures, method="rpart", metric=metric,trControl=trainControl)
+# KNN
+set.seed(7)
+fit.knn <- train(audience_score~., data=datasetFeatures, method="knn", metric=metric, trControl=trainControl)
+# Compare algorithms
+feature_results <- resamples(list(LM=fit.lm, GLM=fit.glm, GLMNET=fit.glmnet, SVM=fit.svm,
+                                  CART=fit.cart, KNN=fit.knn))
+summary(feature_results)
+dotplot(feature_results)
+{% endhighlight %}
+
+{% highlight text %}
+Call:
+summary.resamples(object = feature_results)
+
+Models: LM, GLM, GLMNET, SVM, CART, KNN 
+Number of resamples: 30 
+
+MAE 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+LM     0.2329423 0.2564362 0.2668919 0.2700825 0.2818092 0.3315974    0
+GLM    0.2329423 0.2564362 0.2668919 0.2700825 0.2818092 0.3315974    0
+GLMNET 0.2284175 0.2526727 0.2649099 0.2669133 0.2815177 0.3163152    0
+SVM    0.2249702 0.2625262 0.2743392 0.2765943 0.2932804 0.3404108    0
+CART   0.2847380 0.3164592 0.3268184 0.3352146 0.3630442 0.3915826    0
+KNN    0.2821982 0.3062210 0.3315394 0.3365520 0.3546523 0.4377836    0
+
+RMSE 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+LM     0.2954738 0.3133134 0.3297484 0.3376256 0.3512610 0.4119349    0
+GLM    0.2954738 0.3133134 0.3297484 0.3376256 0.3512610 0.4119349    0
+GLMNET 0.2866947 0.3118496 0.3253406 0.3315956 0.3523885 0.3955532    0
+SVM    0.2937697 0.3214932 0.3668399 0.3684543 0.4021538 0.5564881    0
+CART   0.3459187 0.3843745 0.4044279 0.4088604 0.4319131 0.4731897    0
+KNN    0.3440746 0.3741771 0.4223117 0.4247752 0.4527700 0.5816831    0
+
+Rsquared 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+LM     0.8429372 0.8764766 0.8898096 0.8892373 0.9016293 0.9261707    0
+GLM    0.8429372 0.8764766 0.8898096 0.8892373 0.9016293 0.9261707    0
+GLMNET 0.8567947 0.8783813 0.8941842 0.8934166 0.9046634 0.9278666    0
+SVM    0.7336090 0.8518095 0.8718849 0.8683236 0.8913415 0.9286218    0
+CART   0.8023546 0.8183961 0.8387880 0.8374483 0.8567945 0.8821153    0
+KNN    0.6922973 0.8028629 0.8329245 0.8234645 0.8521893 0.9078491    0
+{% endhighlight %}
 
 
 
+![Rplot_feature_selection](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot_feature_selection.jpeg)
 
+![Rplot_baseline](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot_baseline.jpeg)
 
 
 
