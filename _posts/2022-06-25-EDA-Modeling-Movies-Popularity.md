@@ -225,6 +225,8 @@ corr.matrix <- cor(train[names_n])
 corrplot(corr.matrix, main="\n\nCorrelation Plot of numerical attributes", method="number")
 {% endhighlight %}
 
+![Rplot-4](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-4.jpeg)
+
 #### Summary of Ideas
 There is a lot of structure in this dataset. We need to think about transforms that we could use later to better expose the structure which in turn may improve modeling accuracy. So far it would be worth trying:
 
