@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Exploratory Data Analysis and Predicting for Popular Film Genres"
+title: "Exploratory Data Analysis and Predicting for Popular Film"
 excerpt: "EDA, Regression, Machine Learning, R"
 tags: [rstats]
 share: true
@@ -569,14 +569,34 @@ dotplot(ensembleResults)
 {% endhighlight %}
 
 {% highlight text %}
+Call:
+summary.resamples(object = ensembleResults)
 
+Models: RF, GBM 
+Number of resamples: 30 
+
+MAE 
+         Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+RF  0.2163944 0.2415927 0.2531496 0.2533204 0.2629469 0.2992215    0
+GBM 0.2217354 0.2443042 0.2560293 0.2542399 0.2626921 0.2932200    0
+
+RMSE 
+         Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+RF  0.2832998 0.3143973 0.3227113 0.3284520 0.3452509 0.3905513    0
+GBM 0.2783212 0.3112522 0.3186321 0.3249106 0.3382011 0.3807624    0
+
+Rsquared 
+         Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+RF  0.8606755 0.8792828 0.8944804 0.8951121 0.9049159 0.9392259    0
+GBM 0.8672786 0.8830680 0.8982563 0.8977297 0.9063247 0.9339450    0
 {% endhighlight %}
 
 ![Rplot_ensemble](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot_ensemble.jpeg)
 
-We can see that Gradient Boosting was the most accurate with an RMSE that was lower than that achieved by tuning glmnet.
+We can see that Gradient Boosting was the most accurate with RMSE and Rsuqared that were better than that achieved by tuning glmnet.
 
 {% highlight r %}
+# Improve Results With Tuning
 # look at parameters used for Gradient Boosting
 # print(fit.gbm)
 grid <- expand.grid(interaction.depth = seq(1, 7, by = 2),
@@ -644,4 +664,4 @@ sprintf("R-squared:  %#.2f", r2)
 [1] "R-squared:  0.93"
 {% endhighlight %}
 
-The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Online-Store-Customer-Segmentation).
+The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Exploratory-Data-Analysis-and-Predicting-for-Popular-Film).
