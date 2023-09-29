@@ -94,12 +94,13 @@ movies_new<-movies_new %>%
   na.omit(runtime)
 {% endhighlight %}
 
-We find that there are 25 percent of CustomerIDs missing, and a very small percentage of Descriptions missing from the data. CustomerID can not be empty for customer segmentation analysis, and at the same time, the dataset is rich enough for serving our purpose, so we will remove the rows with missing CustomerID from the data. For the NAs on description we will replace them with an empty string value.
+Split the data sets into a training Dataset and a testing Dataset,
 
 {% highlight r %}
-df<-df %>%
-  na.omit(CustomerID)
-df$Description<-replace_na(df$Description, "N/A")
+set.seed(101) 
+sample = sample.split(movies_new$audience_score, SplitRatio = .8)
+train = subset(movies_new, sample == TRUE)
+test  = subset(movies_new, sample == FALSE)
 {% endhighlight %}
 
 Check and deal with outlines
