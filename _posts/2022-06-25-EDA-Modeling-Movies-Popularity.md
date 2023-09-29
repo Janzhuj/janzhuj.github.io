@@ -27,26 +27,72 @@ library(Metrics)
 
 {% highlight r %}
 load("movies.RData")
+head(movies,2)
 {% endhighlight %}
 
-The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
+{% highlight text %}
+# A tibble: 2 × 32
+  title        title_type genre runtime mpaa_rating studio thtr_rel_year thtr_rel_month thtr_rel_day dvd_rel_year dvd_rel_month dvd_rel_day imdb_rating
+  <chr>        <fct>      <fct>   <dbl> <fct>       <fct>          <dbl>          <dbl>        <dbl>        <dbl>         <dbl>       <dbl>       <dbl>
+1 Filly Brown  Feature F… Drama      80 R           Indom…          2013              4           19         2013             7          30         5.5
+2 The Dish     Feature F… Drama     101 PG-13       Warne…          2001              3           14         2001             8          28         7.3
+# ℹ 19 more variables: imdb_num_votes <int>, critics_rating <fct>, critics_score <dbl>, audience_rating <fct>, audience_score <dbl>,
+#   best_pic_nom <fct>, best_pic_win <fct>, best_actor_win <fct>, best_actress_win <fct>, best_dir_win <fct>, top200_box <fct>, director <chr>,
+#   actor1 <chr>, actor2 <chr>, actor3 <chr>, actor4 <chr>, actor5 <chr>, imdb_url <chr>, rt_url <chr>
+{% endhighlight %}
 
-## Data Preparation
+The data set is comprised of 651 randomly sampled movies produced and released before 2016, Each record in the database describes characteristics of a movie.Some of these variables are only there for informational purposes and do not make any sense to include in a statistical analysis, For example information in the the actor1 through actor5 variables was used to determine whether the movie casts an actor or actress who won a best actor or actress Oscar. We select and create some new variables that might be meaningful to identify the popularity of movies.
 
-### Data Cleaning
+title_type: Type of movie (Documentary, Feature Film, TV Movie)
+genre: Genre of movie (Action & Adventure, Comedy, Documentary, Drama, Horror, Mystery & Suspense, Other)
+runtime: Runtime of movie (in minutes)
+mpaa_rating: MPAA rating of the movie (G, PG, PG-13, R, Unrated)
+imdb_rating: Rating on IMDB
+imdb_num_votes: Number of votes on IMDB
+critics_rating: Categorical variable for critics rating on Rotten Tomatoes (Certified Fresh, Fresh, Rotten)
+critics_score: Critics score on Rotten Tomatoes
+audience_rating: Categorical variable for audience rating on Rotten Tomatoes (Spilled, Upright)
+audience_score: Audience score on Rotten Tomatoes
+best_pic_win: Whether or not the movie won a best picture Oscar (no, yes)
+best_actor_win: Whether or not one of the main actors in the movie ever won an Oscar (no, yes)
+best_actress win: Whether or not one of the main actresses in the movie ever won an Oscar (no, yes)
+best_dir_win: Whether or not the director of the movie ever won an Oscar (no, yes)
+top200_box: Whether or not the movie is in the Top 200 Box Office list on BoxOfficeMojo (no, yes)
+oscar_season: New variable, Whether or not the movie is released in theaters during the oscar season.
+summer_season: New variable, Whether or not the movie is released in theaters during the summer season.
+
+## 1. Data Preparation
+
+{% highlight r %}
+# creating new features
+# Column for if movie was released during oscar season
+movies <- movies %>% 
+  mutate(oscar_season = as.factor(ifelse(thtr_rel_month %in% c('10', '11', '12'), 'yes', 'no')))
+# Column for if movie was released during summer season
+movies <- movies %>% 
+  mutate(summer_season = as.factor(ifelse(thtr_rel_month %in% c('6', '7', '8'), 'yes', 'no')))
+
+# Abstracting meaningful features.
+movies_new <- movies %>% select(title_type, genre, runtime, mpaa_rating, imdb_rating, imdb_num_votes, critics_rating, critics_score, audience_rating, audience_score, best_pic_win, best_actor_win, best_actress_win, best_dir_win, top200_box, oscar_season, summer_season)
+{% endhighlight %}
 
 Let's check and deal with missing values.
 
 {% highlight r %}
-cat("Number of missing value:", sum(is.na(df)), "\n")
-plot_na_pareto(df)
+cat("Number of missing value:", sum(is.na(movies_new)), "\n")
+plot_na_pareto(movies_new)
 {% endhighlight %}
 
 {% highlight text %}
-Number of missing value: 136534 
+Number of missing value: 1 
 {% endhighlight %}
 
-![Rplot-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-1.png)
+![Rplot-0](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot_0.jpeg)
+
+{% highlight r %}
+movies_new<-movies_new %>%
+  na.omit(runtime)
+{% endhighlight %}
 
 We find that there are 25 percent of CustomerIDs missing, and a very small percentage of Descriptions missing from the data. CustomerID can not be empty for customer segmentation analysis, and at the same time, the dataset is rich enough for serving our purpose, so we will remove the rows with missing CustomerID from the data. For the NAs on description we will replace them with an empty string value.
 
