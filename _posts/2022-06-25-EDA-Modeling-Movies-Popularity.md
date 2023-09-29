@@ -103,11 +103,40 @@ train = subset(movies_new, sample == TRUE)
 test  = subset(movies_new, sample == FALSE)
 {% endhighlight %}
 
-Check and deal with outlines
+## 2. Analyze Data
+### 2.1 Descriptive Statistics
 
 {% highlight r %}
-diagnose_outlier(df) %>% flextable()
-plot_outlier(df,Quantity, UnitPrice)
+dim(train)
+# summarize feature distributions
+summary(train)
+# Let's also look at the data types of each feature.
+sapply(train, class)
+{% endhighlight %}
+
+{% highlight r %}
+        title_type                 genre        runtime       mpaa_rating   imdb_rating    imdb_num_votes           critics_rating critics_score   
+ Documentary : 44   Drama             :255   Min.   : 39.0   G      : 16   Min.   :1.900   Min.   :   180   Certified Fresh: 99    Min.   :  1.00  
+ Feature Film:473   Comedy            : 63   1st Qu.: 92.0   NC-17  :  2   1st Qu.:5.900   1st Qu.:  4375   Fresh          :173    1st Qu.: 32.00  
+ TV Movie    :  4   Action & Adventure: 47   Median :102.0   PG     : 95   Median :6.600   Median : 15025   Rotten         :249    Median : 61.00  
+                    Documentary       : 43   Mean   :105.5   PG-13  :104   Mean   :6.477   Mean   : 56558                          Mean   : 56.91  
+                    Mystery & Suspense: 42   3rd Qu.:115.0   R      :266   3rd Qu.:7.300   3rd Qu.: 57251                          3rd Qu.: 82.00  
+                    Horror            : 19   Max.   :267.0   Unrated: 38   Max.   :9.000   Max.   :893008                          Max.   :100.00  
+                    (Other)           : 52                                                                                                         
+ audience_rating audience_score  best_pic_win best_actor_win best_actress_win best_dir_win top200_box oscar_season summer_season
+ Spilled:220     Min.   :11.00   no :518      no :443        no :469          no :489      no :510    no :373      no :389      
+ Upright:301     1st Qu.:46.00   yes:  3      yes: 78        yes: 52          yes: 32      yes: 11    yes:148      yes:132      
+                 Median :65.00                                                                                                  
+                 Mean   :62.45                                                                                                  
+                 3rd Qu.:80.00                                                                                                  
+                 Max.   :97.00   
+
+      title_type            genre          runtime      mpaa_rating      imdb_rating   imdb_num_votes   critics_rating    critics_score 
+        "factor"         "factor"        "numeric"         "factor"        "numeric"        "integer"         "factor"        "numeric" 
+ audience_rating   audience_score     best_pic_win   best_actor_win best_actress_win     best_dir_win       top200_box     oscar_season 
+        "factor"        "numeric"         "factor"         "factor"         "factor"         "factor"         "factor"         "factor" 
+   summer_season 
+        "factor"                  
 {% endhighlight %}
 
 ![Rplot-2](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-2.png)
