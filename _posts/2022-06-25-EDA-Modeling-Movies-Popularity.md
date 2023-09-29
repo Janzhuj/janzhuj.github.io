@@ -197,15 +197,8 @@ Critics_rating, audience_rating have observations spread out fairly evenly over 
 
 {% highlight r %}
 names_n <- names(Filter(is.numeric,train))
-ggplot(data = train, aes(x = audience_score)) + 
-  geom_histogram(aes(y=100*(..count..)/sum(..count..)), color='black', fill='white') + ylab('percentage') + ggtitle("audience_score") 
-{% endhighlight %}
-
-![Rplot-3](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-3.jpeg)
-
-{% highlight r %}
 hisplot_list <- list()
-for (name in names_n[-5]) {
+for (name in names_n) {
   plot <- ggplot(data = train, aes_string(x = name)) + 
     geom_histogram(aes(y=100*(..count..)/sum(..count..)), color='black', fill='white') + ylab('percentage') + ggtitle(name) 
   hisplot_list[[name]] <- plot
@@ -214,7 +207,7 @@ hisplot_grob <- arrangeGrob(grobs=hisplot_list, ncol=2)
 grid.arrange(hisplot_grob)
 {% endhighlight %}
 
-![Rplot-3-2](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-3-2.jpeg)
+![Rplot-4-1](/figs/2022-06-25-EDA-Modeling-Movies-Popularity/Rplot-4-1.jpeg)
 
 The distribution of attribute imdb_num_votes is right skewed, will be shifted by using The BoxCox transform to reduce the skew and make it more Gaussian 
 
