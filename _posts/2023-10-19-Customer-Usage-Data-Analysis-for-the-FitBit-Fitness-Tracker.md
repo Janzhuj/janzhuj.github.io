@@ -131,7 +131,7 @@ gg_miss_var(merged_daily_activity,show_pct=TRUE)
 Correlation between numerical Variable
 
 {% highlight r %}
-# Correlation drop TrackerDistance (redundant with TotalDistance), sleep related columns(not all daily_activity have an equivalent daily_sleep recorded,))
+# Correlation without sleep related data (drop TrackerDistance for redundant with TotalDistance, sleep related columns for not all daily_activity have an equivalent daily_sleep recorded)
 data_correlation <- select(merged_daily_activity, TotalSteps:Calories, -TrackerDistance)
 corrplot(cor(data_correlation))
 {% endhighlight %}
@@ -139,14 +139,14 @@ corrplot(cor(data_correlation))
 ![Rplot-1-1](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-1.jpeg)
 
 {% highlight r %}
-# Correlation drop the observations with "NA" on sleep related data
+# Correlation with sleep realted data (drop the observations with "NA" on sleep related data)
 data_corr_withsleep <- select(merged_daily_activity, TotalSteps:TotalTimeInBed, -TrackerDistance) %>% filter(!is.na(TotalTimeInBed))
 corrplot(cor(data_corr_withsleep))
 {% endhighlight %}
 
 ![Rplot-1-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-2.jpeg)
 
-Based on the Correlation Plot, we can see that TotalSteps, TotalDistance (also with high correlation with TotalSteps, collinear), VeryActiveDistance, VeryActiveMinutes, and surprisingly, LightActiveDistance has a high positive correlation with Calories burned. We can surmised that as long as you walk longer distance or greater steps, it won't matter if it is intense or light activity.
+Based on the Correlation Plot, we can see that TotalSteps, TotalDistance (also with high correlation with TotalSteps, collinear), VeryActiveDistance, VeryActiveMinutes, and surprisingly, LightActiveDistance has a high positive correlation with Calories burned. We can summarize that as long as you walk longer distance or greater steps, it won't matter if it is intense or light activity.
 
 {% highlight r %}
 # Relationship of Calories burned with TotalDistance and TotalSteps
@@ -167,7 +167,35 @@ grid.arrange(plt_grob)
 ![Rplot-1-3](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-3.jpeg)
 
 
+#### Analyze tracker Wearing Days by Users
 
+{% highlight r %}
+user_usagedays <- merged_daily_activity %>%
+  group_by(Id) %>%
+  summarise(usagedays = n()) 
+PieChart(usagedays, hole = 0.3, values = "%", data = user_usagedays,main = "Tracker Wearing Days by Users")     # hole = 0 pie chart
+{% endhighlight %}
+
+![Rplot-2-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-2-2.jpeg)
+
+{% highlight r %}
+## Data transformation
+user <- user_usagedays %>% 
+  group_by(usagedays) %>% # Variable to be transformed
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = n/sum(n)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc)) 
+user$usagedays<- factor(user$usagedays, levels =user$usagedays)
+
+ggplot(data = user, aes(x = usagedays, y=n)) + geom_bar(stat="identity", fill= "#F6AE2D", colour="black") + 
+  ylab('Number of users') + xlab('Number of days of wearing') + ggtitle( "Tracker Wearing Days by Users") +
+  geom_text(aes(label = n), vjust = 1.5, colour = "black")+
+  theme_minimal()     #  "#55DDE0", "#33658A", "#2F4858", "#F6AE2D", "#F26419", "#999999"
+{% endhighlight %}
+
+![Rplot-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-2.jpeg)
 
 The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
 
