@@ -79,7 +79,7 @@ str(daily_sleep)
  $ TotalTimeInBed    : int  346 407 442 367 712 320 377 364 384 449 ...
 {% endhighlight %}
 
-Merge datasets
+#### Let's merge and prepare dataset
 
 {% highlight r %}
 # Make the date format consistent for daily_activity and data_sleep. For merging/joining dataset easier, we also need to rename both of date column names to the same  .
@@ -98,7 +98,7 @@ glimpse(daily_sleep)
 merged_daily_activity <- merge(x = daily_activity, y = daily_sleep, by=c("Id","date"), all.x = TRUE)
 # Create day of the week feature
 merged_daily_activity$day_week <- wday(merged_daily_activity$date, label = TRUE)
-# Checking if it merged properly
+# Checking dataset
 head(merged_daily_activity,2)
 {% endhighlight %}
 
@@ -109,16 +109,11 @@ head(merged_daily_activity,2)
   LightActiveDistance SedentaryActiveDistance VeryActiveMinutes FairlyActiveMinutes LightlyActiveMinutes SedentaryMinutes Calories TotalSleepRecords
 1                6.06                       0                25                  13                  328              728     1985                 1
 2                4.71                       0                21                  19                  217              776     1797                 2
-  TotalMinutesAsleep TotalTimeInBed
-1                327            346
-2                384            407
+  TotalMinutesAsleep TotalTimeInBed day_week
+1                327            346      Tue
+2                384            407      Wed
 {% endhighlight %}
 
-#### Create day of the week feature
-
-{% highlight r %}
-merged_daily_activity$day_week <- wday(merged_daily_activity$date, label = TRUE)
-{% endhighlight %}
 
 #### Let’s check missing values
 
@@ -129,7 +124,50 @@ cat("Number of missing value:", sum(is.na(merged_daily_activity)), "\n")
 gg_miss_var(merged_daily_activity,show_pct=TRUE)
 {% endhighlight %}
 
-![Rplot-0](/figs/![Rplot-0](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-0.jpeg)
+![Rplot-0](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-0.jpeg)
+
+## EDA
+
+Correlation between numerical Variable
+
+{% highlight r %}
+# Correlation drop TrackerDistance (redundant with TotalDistance), sleep related columns(not all daily_activity have an equivalent daily_sleep recorded,))
+data_correlation <- select(merged_daily_activity, TotalSteps:Calories, -TrackerDistance)
+corrplot(cor(data_correlation))
+{% endhighlight %}
+
+![Rplot-1-1](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-1.jpeg)
+
+{% highlight r %}
+# Correlation drop the observations with "NA" on sleep related data
+data_corr_withsleep <- select(merged_daily_activity, TotalSteps:TotalTimeInBed, -TrackerDistance) %>% filter(!is.na(TotalTimeInBed))
+corrplot(cor(data_corr_withsleep))
+{% endhighlight %}
+
+![Rplot-1-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-2.jpeg)
+
+Based on the Correlation Plot, we can see that TotalSteps, TotalDistance (also with high correlation with TotalSteps, collinear), VeryActiveDistance, VeryActiveMinutes, and surprisingly, LightActiveDistance has a high positive correlation with Calories burned. We can surmised that as long as you walk longer distance or greater steps, it won't matter if it is intense or light activity.
+
+{% highlight r %}
+# Relationship of Calories burned with TotalDistance and TotalSteps
+names_n <- c("TotalSteps", "VeryActiveDistance", "VeryActiveMinutes", "LightActiveDistance")
+plt_list <- list()
+
+for (name in names_n) {
+  plt<-ggplot(data = merged_daily_activity, aes_string(x = merged_daily_activity$Calories, y = name)) + 
+    geom_point(colour = "#33658A") + xlab('Calories')+ 
+    geom_smooth()+
+    theme_minimal()
+  plt_list[[name]] <- plt
+}
+plt_grob <- arrangeGrob(grobs=plt_list, ncol=2)
+grid.arrange(plt_grob)
+{% endhighlight %}
+
+![Rplot-1-3](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-3.jpeg)
+
+
+
 
 The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
 
