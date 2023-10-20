@@ -9,10 +9,7 @@ comments: true
 
 ## Introduction
 
-This is customer usage data analysis projcet for a fitness tracker procucted by Bellabeat company. The devices monitors health vitals of the customer. Bellabeat is looking to expand their business and would like to perform a marketing analytics. To do this we need to get insight from the device usage sampled from 33 customers.
-
-
-In this post, I will use clustering algorithm to perform Customer Segmentation for an e-commerce store. It will helps the business to better understand its customers, and modify its products and Marketing strategy based on the specific segments. I will be using a widely known data set from [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii).  
+This project involves the analysis of customer usage data for a fitness tracker. Bellabeat, a company that produces FitBit fitness tracker specifically for women. The device can monitor the health vitals of its customers. Bellabeat conduct marketing analytics to expand their business. They have sampled [one-month usage data](https://www.kaggle.com/datasets/arashnic/fitbit) from thirty-three eligible Fitbit users, with their consent. Our task is to gain insights into how existing customers use their products, identify potential trends in Fitbit smart device usage, and leverage these insightful analyses to establish a new market strategy for Bellabeat. 
 
 First let’s load the required packages.
 
