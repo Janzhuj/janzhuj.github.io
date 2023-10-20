@@ -197,22 +197,32 @@ ggplot(data = user, aes(x = usagedays, y=n)) + geom_bar(stat="identity", fill= "
 
 ![Rplot-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-2.jpeg)
 
-The dataset consists of 541,909 rows and 8 features. Most of features have correct formats, but some features need to be converted for better analysis in the next step, like InvoiceNo and the InvoiceDate. The dataset involves 25900 transactions, 4373 customers, 4212 products and 38 country
-
-## Data Preparation
-
-### Data Cleaning
-
-Let's check and deal with missing values.
+#### Analyze user activity behavior by weekday
 
 {% highlight r %}
-cat("Number of missing value:", sum(is.na(df)), "\n")
-plot_na_pareto(df)
+avg_weekday_activity <- merged_daily_activity %>% 
+  group_by(day_week) %>% 
+  summarise_at(c(Avgsteps = "TotalSteps", "Calories", "TotalMinutesAsleep"), mean,na.rm = TRUE) # see how it produces an error because of the "NA" record  
+
+names <- names(Filter(is.numeric,avg_weekday_activity))
+plt2_list <- list()
+
+for (name in names) {
+  plt<-ggplot(data = avg_weekday_activity, aes_string(x= avg_weekday_activity$day_week, y = name, fill = name)) + 
+    geom_bar(stat="identity") + xlab('Day of Week')+    # geom_bar(stat="identity", fill= "#55DDE0", colour="black")
+    scale_fill_gradient (low="light blue", high= "dark blue")+
+    theme_minimal()+  
+    theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),
+                            legend.position= "none")
+  plt2_list[[name]] <- plt
+}
+plt2_grob <- arrangeGrob(grobs=plt2_list, ncol=2)
+grid.arrange(plt2_grob)
 {% endhighlight %}
 
-{% highlight text %}
-Number of missing value: 136534 
-{% endhighlight %}
+![Rplot-3-1](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-3-1.jpeg)
 
-![Rplot-1](/figs/![Rplot-1](/figs/2023-07-22-Online-Store-Customer-Segmentation/Rplot-0.jpeg)
-/Rplot-1.png)
+The activity Plots of the days of the week shows that Saturday recorded the most active day for our customer, followed by Tuesday. Saturday was a weekend and most people probably had more time to exercise. The curious things was that Tuesday was the second most active day. We need to dive deeper on what caused this sudden increase in activity. Customers had the highest average sleep time on Sunday, which probably from all the intense activities done on Saturday. Increasing sleep on Wednesday also coincided with the increasing activity shown on Tuesday.
+
+#### Analyze user types
+#### * method 1, Based on daily steps, we group users into 4 types: Sedentary, Lightly Active, Fairly Active, and Very Active. 
