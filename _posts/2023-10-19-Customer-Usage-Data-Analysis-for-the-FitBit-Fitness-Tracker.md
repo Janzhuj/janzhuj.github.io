@@ -355,5 +355,133 @@ user_K3 <- user_average %>% select(Segment, AvgSteps,VeryActiveMinutes:Calories)
 user_K3
 {% endhighlight %}
 
-![Rplot](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot.jpeg)
+![Rplot-6](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6.jpeg)
 
+#### compare by users
+
+{% highlight r %}
+user2_type_sum <- user_average %>%
+  group_by(Segment) %>%
+  summarise(user_n= n()) %>%
+  mutate(user_perc= user_n/sum(user_n))%>% 
+  arrange(user_perc)
+
+ggplot(user2_type_sum, aes(x = 1, y = user_perc, fill = Segment)) +
+  geom_col(color = "black") +
+  geom_text(aes(label =scales::percent(user_perc)), colour = "white",  position = position_stack(vjust = 0.5))  +
+  coord_polar(theta = "y", start=0)+
+  guides(fill = guide_legend(title = "Life styles")) +
+  scale_fill_viridis_d() +
+  theme_void()+    # want a blank slate 
+  labs(x = NULL, y = NULL, fill = NULL, title = "Life styles by Users -- Kmean")
+
+
+p1<-ggplot(user_average[user_average[,"AvgSteps"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,AvgSteps, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Daily Steps by User Type", 
+       x= " ", y="Steps",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+
+p2<-ggplot(user_average[user_average[,"Calories"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,Calories, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Daily Burned Calories by User Type", 
+       x= " ", y="Calories",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+p3<-ggplot(na.omit(user_average[user_average[,"AvgMinutesAsleep"] >0, ]),    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,AvgMinutesAsleep, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= " Daily Asleep by User Type", 
+       x= " ", y="Minutes Asleep",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+grid.arrange(p1,p2,p3,ncol=2)
+
+
+p4<-ggplot(user_average[user_average[,"VeryActiveMinutes"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,VeryActiveMinutes, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Very Active Minutes  by User Type", 
+       x= " ", y="VeryActiveMinutes ",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+
+p5<-ggplot(user_average[user_average[,"FairlyActiveMinutes"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,FairlyActiveMinutes, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Fairly Active Minutes by User Type", 
+       x= " ", y="Fairly Active Minutes ",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+p6<-ggplot(user_average[user_average[,"LightlyActiveMinutes"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,LightlyActiveMinutes, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Lightly Active Minutes by User Type", 
+       x= " ", y="Lightly Active Minutes ",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+p7<-ggplot(na.omit(user_average[user_average[,"SedentaryMinutes"] >0, ]),    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(Segment,SedentaryMinutes, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Sedentary Minutes by User Type", 
+       x= " ", y="Sedentary Minutes   ",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+grid.arrange(p4,p5,p6,p7, ncol=2)
+{% endhighlight %}
+
+![Rplot-6-0](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6-0.jpeg)
+
+![Rplot-6-1](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6-1.jpeg)
+
+![Rplot-6-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6-2.jpeg)
