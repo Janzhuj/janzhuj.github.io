@@ -263,25 +263,22 @@ ggplot(user_type_sum, aes(x = 1, y = user_perc, fill = user_type)) +
 #### Compare steps, calories, distance & sleep by user type: 
 
 {% highlight r %}
-group_daily_activity <- merge(merged_daily_activity, daily_average[c("Id","user_type")], by="Id") 
-
-p1<-ggplot(group_daily_activity[group_daily_activity[,"TotalSteps"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
-       aes(user_type,TotalSteps, fill=user_type))+
+p1<-ggplot(daily_average[daily_average[,"avg_daily_steps"] >0, ],   
+           aes(user_type,avg_daily_steps, fill=user_type))+
   geom_boxplot()+
   stat_summary(fun="mean", geom="point", 
                shape=23,size=2, fill="white")+
   labs(title= "Daily Steps by User Type", 
        x= " ", y="Steps",
        #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
-       )+
+  )+
   scale_fill_brewer(palette="BuPu")+
   theme_minimal()+
-  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=12),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
         legend.position= "none")
 
-
-p2<-ggplot(group_daily_activity[group_daily_activity[,"Calories"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
-           aes(user_type,Calories, fill=user_type))+
+p2<-ggplot(daily_average[daily_average[,"avg_daily_cal"] >0, ],   
+           aes(user_type,avg_daily_cal, fill=user_type))+
   geom_boxplot()+
   stat_summary(fun="mean", geom="point", 
                shape=23,size=2, fill="white")+
@@ -291,11 +288,11 @@ p2<-ggplot(group_daily_activity[group_daily_activity[,"Calories"] >0, ],    #gro
   )+
   scale_fill_brewer(palette="BuPu")+
   theme_minimal()+
-  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=12),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
         legend.position= "none")
 
-p3<-ggplot(na.omit(group_daily_activity[group_daily_activity[,"TotalMinutesAsleep"] >0, ]),    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
-           aes(user_type,TotalMinutesAsleep, fill=user_type))+
+p3<-ggplot(na.omit(daily_average[daily_average[,"avg_daily_sleep"] >0, ]),    
+           aes(user_type,avg_daily_sleep, fill=user_type))+
   geom_boxplot()+
   stat_summary(fun="mean", geom="point", 
                shape=23,size=2, fill="white")+
@@ -305,7 +302,7 @@ p3<-ggplot(na.omit(group_daily_activity[group_daily_activity[,"TotalMinutesAslee
   )+
   scale_fill_brewer(palette="BuPu")+
   theme_minimal()+
-  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=12),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
         legend.position= "none")
 grid.arrange(p1,p2,p3,ncol=2)
 {% endhighlight %}
