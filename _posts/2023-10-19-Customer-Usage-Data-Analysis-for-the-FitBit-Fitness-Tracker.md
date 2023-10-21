@@ -311,3 +311,49 @@ grid.arrange(p1,p2,p3,ncol=2)
 {% endhighlight %}
 
 ![Rplot-5](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-5.jpeg)
+
+
+#### 3.4.2  Method 2: use clustering method to segment users
+
+{% highlight r %}
+user_average <- merged_daily_activity %>% 
+  group_by(Id) %>% 
+  summarise_at(c(2:17),mean,na.rm = TRUE) %>% 
+  rename_with(~str_replace(., 'Total', 'Avg'))  %>%
+  mutate(Id = as.character(Id))
+# corrplot(cor(select(user_average, AvgSteps:Calories, -TrackerDistance)))
+# Scale the data
+user_average_scaled <- scale(select(user_average, AvgSteps,VeryActiveMinutes:Calories))
+# Determine how many clusters we can make
+nb <- NbClust(user_average_scaled, distance = "euclidean", min.nc = 2,
+              max.nc = 6, method = "kmeans")
+#fviz_nbclust(nb)
+# Three is the best cluster number. We will use 3 clusters to group these users for simplicity
+km_res <- kmeans(user_average_scaled, centers = 3, nstart = 35)
+fviz_cluster(km_res, geom = "point", data=user_average_scaled,ggtheme = theme_minimal())+ggtitle("k-means clustering K=3")
+# Lets also check the amount of customers in each cluster.
+km_res$size
+# centroids from model on normalized data
+km_res$centers 
+{% endhighlight %}
+
+![Rplot](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot.jpeg)
+
+#### Analysis clustering results
+
+{% highlight r %}
+# add cluster into user_average dataset
+user_average <- user_average %>% 
+  mutate(Cluster = km_res$cluster)
+
+user_average <- user_average %>% 
+  mutate(Segment = ifelse(Cluster == 1, "Sedentary",
+                          ifelse(Cluster == 2, "Very Active", "Lightly Active")))
+
+user_K3 <- user_average %>% select(Segment, AvgSteps,VeryActiveMinutes:Calories)%>% group_by(Segment) %>% summarise_all("mean") %>% 
+  ungroup() %>% kable() %>% kable_styling()
+user_K3
+{% endhighlight %}
+
+![Rplot](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot.jpeg)
+
