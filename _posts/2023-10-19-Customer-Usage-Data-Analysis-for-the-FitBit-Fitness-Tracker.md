@@ -240,9 +240,7 @@ daily_average <- merged_daily_activity %>%
     avg_daily_steps >= 7499 & avg_daily_steps <9999 ~"fairly_active",
     avg_daily_steps >= 10000 ~"very_active"
   ))
-{% endhighlight %}
 
-![Rplot-4](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-4.jpeg)
 # summarize life style of users
 user_type_sum <- daily_average %>%
   group_by(user_type) %>%
@@ -257,3 +255,57 @@ ggplot(user_type_sum, aes(x = 1, y = user_perc, fill = user_type)) +
   scale_fill_viridis_d() +
   theme_void()+    # want a blank slate 
   labs(x = NULL, y = NULL, fill = NULL, title = "Life styles by Users")
+{% endhighlight %}
+
+![Rplot-4](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-4.jpeg)
+
+{% highlight r %}
+#### Compare each life style: steps, calories, distance & sleep
+group_daily_activity <- merge(merged_daily_activity, daily_average[c("Id","user_type")], by="Id") 
+
+p1<-ggplot(group_daily_activity[group_daily_activity[,"TotalSteps"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+       aes(user_type,TotalSteps, fill=user_type))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Daily Steps by User Type", 
+       x= " ", y="Steps",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+       )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+
+p2<-ggplot(group_daily_activity[group_daily_activity[,"Calories"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(user_type,Calories, fill=user_type))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Daily Burned Calories by User Type", 
+       x= " ", y="Calories",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+
+p3<-ggplot(na.omit(group_daily_activity[group_daily_activity[,"TotalMinutesAsleep"] >0, ]),    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
+           aes(user_type,TotalMinutesAsleep, fill=user_type))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= " Daily Asleep by User Type", 
+       x= " ", y="Minutes Asleep",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+grid.arrange(p1,p2,p3,ncol=2)
+{% endhighlight %}
+
+![Rplot-5](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-5.jpeg)
