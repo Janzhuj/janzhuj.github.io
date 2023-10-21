@@ -225,4 +225,35 @@ grid.arrange(plt2_grob)
 The activity Plots of the days of the week shows that Saturday recorded the most active day for our customer, followed by Tuesday. Saturday was a weekend and most people probably had more time to exercise. The curious things was that Tuesday was the second most active day. We need to dive deeper on what caused this sudden increase in activity. Customers had the highest average sleep time on Sunday, which probably from all the intense activities done on Saturday. Increasing sleep on Wednesday also coincided with the increasing activity shown on Tuesday.
 
 #### Analyze user types
-* ####  method 1, Based on daily steps, we group users into 4 types: Sedentary, Lightly Active, Fairly Active, and Very Active. 
+* ####  Method 1, Based on daily steps, we group users into 4 types: Sedentary, Lightly Active, Fairly Active, and Very Active. 
+
+{% highlight r %}
+daily_average <- merged_daily_activity %>% 
+  group_by (Id) %>% 
+  summarise(avg_daily_steps= mean(TotalSteps), 
+            avg_daily_cal= mean(Calories), 
+            avg_daily_sleep= mean(TotalMinutesAsleep, 
+                                  na.rm = TRUE)) %>% 
+  mutate(user_type= case_when(
+    avg_daily_steps < 5000 ~ "sedentary",
+    avg_daily_steps >= 5000 & avg_daily_steps <7499 ~"lightly_active",
+    avg_daily_steps >= 7499 & avg_daily_steps <9999 ~"fairly_active",
+    avg_daily_steps >= 10000 ~"very_active"
+  ))
+{% endhighlight %}
+
+![Rplot-4](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-4.jpeg)
+# summarize life style of users
+user_type_sum <- daily_average %>%
+  group_by(user_type) %>%
+  summarise(user_n= n()) %>%
+  mutate(user_perc= user_n/sum(user_n))
+
+ggplot(user_type_sum, aes(x = 1, y = user_perc, fill = user_type)) +
+  geom_col(color = "black") +
+  geom_text(aes(label = scales::percent(user_perc)), colour = "white", position = position_stack(vjust = 0.5))  +
+  coord_polar(theta = "y")+
+  guides(fill = guide_legend(title = "Life styles")) +
+  scale_fill_viridis_d() +
+  theme_void()+    # want a blank slate 
+  labs(x = NULL, y = NULL, fill = NULL, title = "Life styles by Users")
