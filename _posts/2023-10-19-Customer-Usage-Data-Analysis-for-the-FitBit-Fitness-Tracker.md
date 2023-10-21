@@ -7,11 +7,11 @@ share: true
 comments: true
 ---
 
-## Introduction
+## 1. Introduction
 
 This project involves the analysis of customer usage data for a fitness tracker. Bellabeat, a company that produces FitBit fitness tracker specifically for women. The device can monitor the health vitals of its customers. Bellabeat conduct marketing analytics to expand their business. They have sampled [one-month usage data](https://www.kaggle.com/datasets/arashnic/fitbit) from thirty-three eligible Fitbit users, with their consent. Our task is to gain insights into how existing customers use their products, identify potential trends in Fitbit smart device usage, and leverage these insightful analyses to establish a new market strategy for Bellabeat. 
 
-## Data Preparation
+## 2. Data Preparation
 
 Load Packages and libraries
 
@@ -126,9 +126,9 @@ gg_miss_var(merged_daily_activity,show_pct=TRUE)
 
 ![Rplot-0](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-0.jpeg)
 
-## EDA
+## 3. EDA
 
-Correlation between numerical Variable
+### 3.1 Correlation between numerical Variable
 
 {% highlight r %}
 # Correlation without sleep related data (drop TrackerDistance for redundant with TotalDistance, sleep related columns for not all daily_activity have an equivalent daily_sleep recorded)
@@ -167,7 +167,7 @@ grid.arrange(plt_grob)
 ![Rplot-1-3](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-1-3.jpeg)
 
 
-#### Analyze tracker Wearing Days by Users
+### 3.2 Analyze tracker Wearing Days by Users
 
 {% highlight r %}
 user_usagedays <- merged_daily_activity %>%
@@ -197,7 +197,7 @@ ggplot(data = user, aes(x = usagedays, y=n)) + geom_bar(stat="identity", fill= "
 
 ![Rplot-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-2.jpeg)
 
-#### Analyze user activity behavior by weekday
+### 3.3 Analyze user activity behavior by weekday
 
 {% highlight r %}
 avg_weekday_activity <- merged_daily_activity %>% 
@@ -224,8 +224,9 @@ grid.arrange(plt2_grob)
 
 The activity Plots of the days of the week shows that Saturday recorded the most active day for our customer, followed by Tuesday. Saturday was a weekend and most people probably had more time to exercise. The curious things was that Tuesday was the second most active day. We need to dive deeper on what caused this sudden increase in activity. Customers had the highest average sleep time on Sunday, which probably from all the intense activities done on Saturday. Increasing sleep on Wednesday also coincided with the increasing activity shown on Tuesday.
 
-#### Analyze user types
-* ####  Method 1, Based on daily steps, we group users into 4 types: Sedentary, Lightly Active, Fairly Active, and Very Active. 
+### 3.4 Analyze user types
+
+#### 3.4.1  Method 1, Based on daily steps, we group users into 4 types: Sedentary, Lightly Active, Fairly Active, and Very Active. 
 
 {% highlight r %}
 daily_average <- merged_daily_activity %>% 
@@ -259,8 +260,9 @@ ggplot(user_type_sum, aes(x = 1, y = user_perc, fill = user_type)) +
 
 ![Rplot-4](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-4.jpeg)
 
+#### Compare steps, calories, distance & sleep by user type: 
+
 {% highlight r %}
-#### Compare each life style: steps, calories, distance & sleep
 group_daily_activity <- merge(merged_daily_activity, daily_average[c("Id","user_type")], by="Id") 
 
 p1<-ggplot(group_daily_activity[group_daily_activity[,"TotalSteps"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
