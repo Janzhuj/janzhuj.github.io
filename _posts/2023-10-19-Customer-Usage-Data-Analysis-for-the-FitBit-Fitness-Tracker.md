@@ -482,3 +482,95 @@ grid.arrange(p4,p5,p6,p7, ncol=2)
 ![Rplot-6-1](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6-1.jpeg)
 
 ![Rplot-6-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6-2.jpeg)
+
+
+### 3.5 Analyze Heart Rate
+
+{% highlight r %}
+heartrate <- read.csv("D:/work/job/prepare/FitnessTracker/heartrate_seconds_merged.csv")
+# check data structure
+str(heartrate)
+# Summary Statistics
+summary(heartrate)
+ggplot(data = heartrate, aes(x = Value)) + 
+  geom_histogram(aes(y=100*(..count..)/sum(..count..)), color='black', fill="#55DDE0") + ylab('percentage') + 
+  ggtitle("Heartrate Histogram")+
+  theme_minimal() 
+{% endhighlight %}
+
+![Rplot-7](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-7.jpeg)
+
+#### 3.5.1 Find anomaly value
+
+{% highlight r %}
+heartrate <- heartrate %>% 
+  mutate(Time = mdy_hms(Time), Weekday=weekdays(Time), Hour= format(Time, format = "%H"), Date= format(Time, format = "%m-%d-%y"))
+heartrate_anomaly <- heartrate %>% filter(Value >= 200)
+heartrate_anomaly
+distinct(heartrate %>% filter(Value >= 200), Id)
+{% endhighlight %}
+
+{% highlight text %}
+           Id                Time Value  Weekday Hour     Date
+1  2022484408 2016-04-21 16:31:20   200 Thursday   16 04-21-16
+2  2022484408 2016-04-21 16:31:30   202 Thursday   16 04-21-16
+3  2022484408 2016-04-21 16:31:40   203 Thursday   16 04-21-16
+4  2022484408 2016-04-21 16:31:50   202 Thursday   16 04-21-16
+5  2022484408 2016-04-21 16:32:00   203 Thursday   16 04-21-16
+6  2022484408 2016-04-21 16:32:10   203 Thursday   16 04-21-16
+7  2022484408 2016-04-21 16:32:20   203 Thursday   16 04-21-16
+8  2022484408 2016-04-21 16:32:35   203 Thursday   16 04-21-16
+9  2022484408 2016-04-21 16:32:40   201 Thursday   16 04-21-16
+10 2022484408 2016-04-21 16:32:50   200 Thursday   16 04-21-16
+11 2022484408 2016-04-21 16:33:05   200 Thursday   16 04-21-16
+12 2022484408 2016-04-21 17:05:40   202 Thursday   17 04-21-16
+13 2022484408 2016-04-21 17:05:50   203 Thursday   17 04-21-16
+14 2022484408 2016-04-21 17:06:05   203 Thursday   17 04-21-16
+15 2022484408 2016-04-21 17:06:20   203 Thursday   17 04-21-16
+16 2022484408 2016-04-21 17:06:30   202 Thursday   17 04-21-16
+17 2022484408 2016-04-21 17:06:40   200 Thursday   17 04-21-16
+          Id
+1 2022484408
+{% endhighlight %}
+
+{% highlight r %}
+heartrate_p2 <- heartrate[heartrate$Id==2022484408 & heartrate$Date=="04-21-16",]
+
+ggplot(heartrate_p2, aes(x=Time, y=Value)) + 
+  geom_line(color = 'darkgreen') + 
+  geom_hline(aes(yintercept=200), colour="#990000", linetype="dashed") + #This is our control line 
+  geom_text(x=strptime("2016-04-21 07:30:00", "%Y-%m-%d %H:%M:%S"), y=204, label="Heart Rate = 200") +
+  geom_text(x=strptime("2016-04-21 12:00:00", "%Y-%m-%d %H:%M:%S"), y=100, label="1 hour SMA Line") +
+  geom_ma(ma_fun = SMA, n = 720, color = 'blue', size = 5) +   # plot 1 hour moving average line
+  theme(axis.text.x = element_text(angle = 0, vjust = 1.0, hjust = 1.0)) +
+  labs(title= "Heart Rate Of User ID = 2022484408 in April 12th", 
+       y="Heart Rate BPM",
+  )+
+  theme_minimal() 
+{% endhighlight %}
+
+![Rplot-9](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-9.jpeg)
+
+{% highlight r %}
+heartrate_avg <- heartrate %>%
+  group_by(Id) %>%
+  summarise(Avgheartrate = mean(Value)) %>%
+  ungroup()
+  
+merged_heartrate <- merge(heartrate_avg, user_average[c("Id","Segment")], by="Id", all.x = TRUE)
+
+ggplot(merged_heartrate,aes(Segment,Avgheartrate, fill=Segment))+
+  geom_boxplot()+
+  stat_summary(fun="mean", geom="point", 
+               shape=23,size=2, fill="white")+
+  labs(title= "Average Heart Rate by User Type", 
+       x= " ", y="Heart Rate",
+       #caption= 'Data Source: Fitabase Data 4.12.16-5.12.16'
+  )+
+  scale_fill_brewer(palette="BuPu")+
+  theme_minimal()+
+  theme(plot.title= element_text(hjust= 0.5,vjust= 0.8, size=16),axis.text.x = element_text(angle = 15, vjust = 1.5, hjust=0.5),
+        legend.position= "none")
+{% endhighlight %}
+
+![Rplot-10](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-10.jpeg)
