@@ -344,8 +344,8 @@ user_average <- user_average %>%
   mutate(Cluster = km_res$cluster)
 
 user_average <- user_average %>% 
-  mutate(Segment = ifelse(Cluster == 1, "Sedentary",
-                          ifelse(Cluster == 2, "Very Active", "Lightly Active")))
+  mutate(Segment = ifelse(Cluster == 1, "Very Active",
+                          ifelse(Cluster == 2, "Lightly Active", "Sedentary")))
 
 user_K3 <- user_average %>% select(Segment, AvgSteps,VeryActiveMinutes:Calories)%>% group_by(Segment) %>% summarise_all("mean") %>% 
   ungroup() %>% kable() %>% kable_styling()
