@@ -222,7 +222,7 @@ grid.arrange(plt2_grob)
 
 ![Rplot-3-1](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-3-1.jpeg)
 
-The activity Plots of the days of the week shows that Saturday recorded the most active day for our customer, followed by Tuesday. Saturday was a weekend and most people probably had more time to exercise. The curious things was that Tuesday was the second most active day. We need to dive deeper on what caused this sudden increase in activity. Customers had the highest average sleep time on Sunday, which probably from all the intense activities done on Saturday. Increasing sleep on Wednesday also coincided with the increasing activity shown on Tuesday.
+The Activity Plots for the days of the week reveal that our customers were most active on Saturdays, followed closely by Tuesdays. Given that Saturday is a part of the weekend, it’s likely that people had more leisure time to engage in physical activities. Interestingly, Tuesday emerged as the second most active day, a trend that warrants further investigation to understand the underlying cause of this surge in activity. Our data also showed that customers recorded the highest average sleep duration on Sundays, possibly recuperating from the intense activities undertaken on Saturday. Additionally, an increase in sleep observed on Wednesdays aligns with the heightened activity levels seen on Tuesdays
 
 ### 3.4 Analyze user types
 
@@ -417,7 +417,6 @@ p3<-ggplot(na.omit(user_average[user_average[,"AvgMinutesAsleep"] >0, ]),    #gr
         legend.position= "none")
 grid.arrange(p1,p2,p3,ncol=2)
 
-
 p4<-ggplot(user_average[user_average[,"VeryActiveMinutes"] >0, ],    #group_daily_activity[which(group_daily_activity$TotalSteps>0),]
            aes(Segment,VeryActiveMinutes, fill=Segment))+
   geom_boxplot()+
@@ -484,10 +483,12 @@ grid.arrange(p4,p5,p6,p7, ncol=2)
 ![Rplot-6-2](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-6-2.jpeg)
 
 
+Utilizing the k-means clustering method, we have segmented all users into three distinct groups: very active, lightly active, and sedentary. The ‘very active’ users, typically sports enthusiasts, constitute approximately 12% of all users. They exhibit the highest intensity of exercise, as evidenced by their daily average steps, intense exercise duration, and calories burned, which significantly surpass those of the other two groups. The ‘lightly active’ users make up 55% of the total user base. Although their daily average steps exceed those of the sedentary group, their daily average calories burned show no significant difference. This is likely due to their insufficient duration of high-intensity activity. Extended periods of sedentary behavior are the primary reason users are categorized as ‘sedentary’.
+
 ### 3.5 Analyze Heart Rate
 
 {% highlight r %}
-heartrate <- read.csv("D:/work/job/prepare/FitnessTracker/heartrate_seconds_merged.csv")
+heartrate <- read.csv("../FitnessTracker/heartrate_seconds_merged.csv")
 # check data structure
 str(heartrate)
 # Summary Statistics
@@ -499,6 +500,8 @@ ggplot(data = heartrate, aes(x = Value)) +
 {% endhighlight %}
 
 ![Rplot-7](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-7.jpeg)
+
+The histogram shows some extreme values for heart rate, with over 200 beats per minute (BPM)， which is very dangerous even on an intense activity. Let's check those record with more than 200 BPM.
 
 #### 3.5.1 Find anomaly value
 
