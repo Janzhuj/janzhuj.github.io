@@ -581,27 +581,18 @@ ggplot(merged_heartrate,aes(Segment,Avgheartrate, fill=Segment))+
 
 ![Rplot-10](/figs/2023-10-19-FitBit-Fitness-Tracker/Rplot-10.jpeg)
 
-## 4. Marketing Strategy
+## 4. Product Marketing Strategy
 
-A health device that monitors the users activity would be useful for the health buffs. So we recommend to continue advertising it as a supplement for users who wish to have an active lifestyle. It would have been helpful if the company provided an age range field of the users, so we can get insight on which age range were the most active.
+A fitness tracker would be useful for the health buffs by monitoring the users activity to build more health lifestyle.  Our new marketing strategy about this device focuses on professional fitness and health features
 
-Weekend Warriors
-With the available data and limited observation on time of use, we can see that Saturday is the most active day of the week. Which means that the most active users were most likely workers that can get really active on weekend. The company can target the demographics of workers, techies, and health conscious people.
+* #### Customize Exercise Regimen by user type
 
-Customize Exercise Regimen per User Type (Cluster)
-Using cluster analysis, Bellabeat now has an insight on the different type of users that they have. We recommend on taking a customized approach on motivating the different type of users to exercise.
+We can provide an range of exercise regimen by users types. Provide lower/upper quantial and average steps, distance and burned calories of each user type, custormer can attempt more health lifestyle by challenging more high-intensity exercise, or keep exercise around the average that he preferred lifestyle. 
 
-Cluster 3, being the most active need no further motivation, but a quick reminder from a device if this users became sedentary for a long period would be a good way to get them back on their feet.
+* #### Explore Tools to increase exercise motivation.
 
-Cluster 2, the moderate/casual users; giving them a daily goal on number of steps might motivate them to be more active. Remind them, based on analysis, that they don't necessarily need to do an intense workout as a normal walk would suffice. Again, it's not the intensity, but the steps and distance that matter in burning calories.
+By observing on activity trend graph, we found that exercise is not consistent every day of week with Saturday and Tuesday being the most active days. We recommend Custermor to set higher intensity exercise goal on Tuesday and Saturday, and users also can customize their own special warriors day to challenge more active exercise. If our device can connect to local sport event or club event, it will highly motivate users increase exercise.  
+  
+* #### Improve Health alert features
 
-Cluster 1, the sedentary users; they probably bought this device to motivate themselves to be more active, or someone simply gave them as a gift. In any case, a reminder on the health risks of a sedentary lifestyle might push them off their couch.
-
-Additional Recommendation
-Increase Market by Introducing the Product as a Medical Alert Device for People with Health Risks
-A useful feature that can be added to this device is the ability to alert the user of a sudden increase in BPM or other health vitals like oxygen level. A feature where the device can contact an emergency hotline or a designated person in case of emergency would be a good value-added service to offer.
-
-This will expand their target not only for the health buffs but also for those who are at-risk of hypertension, heart attack, or palpitations trigerred by anxiety attacks, etc.
-
-Improve the Sensor of the Device
-If the device sensor registered a palpitation to be under "VeryActiveMinutes", it would cause data integrity issue. There should be a cross-check if that increased heart rate also has increased steps and/or distance. If they recorded that the user has increased heart rate without doing any activity, it should not categorize it under Very Active Minutes, and it should trigger an alert for the user or other emergency contact.
+As a fitness device,  the abnormal health vital signs alarm function is indispensable, such as a sudden increase in BPM and other health vitals like oxygen level, blood preasure. A feature where the device can contact an emergency hotline or a designated person in case of emergency would be a good value-added service to offer. Healthy lifestyle reminders are also needed， such as move reminder after a longtime sedentary remind, too late sleep remind, and sleep time extreme less remind. 
