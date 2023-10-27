@@ -583,16 +583,16 @@ ggplot(merged_heartrate,aes(Segment,Avgheartrate, fill=Segment))+
 
 ## 4. Product Marketing Strategy
 
-A fitness tracker would be useful for the health buffs by monitoring the users activity to build more health lifestyle.  Our new marketing strategy about this device focuses on professional fitness and health features
+A fitness tracker can be a valuable tool for health enthusiasts, as it monitors user activity to promote a healthier lifestyle. Our new marketing strategy for this device emphasizes its professional fitness and health features.
 
-* #### Customize Exercise Regimen by user type
+* #### Customized Exercise Regimen by User Type
 
-We can provide an range of exercise regimen by users types. Provide lower/upper quantial and average steps, distance and burned calories of each user type, custormer can attempt more health lifestyle by challenging more high-intensity exercise, or keep exercise around the average that he preferred lifestyle. 
+We can offer a range of exercise regimens tailored to different user types. By providing the lower, upper quartiles, and average steps, distance, and calories burned for each user type, customers can strive for a healthier lifestyle by challenging themselves with more high-intensity exercises or maintaining an exercise routine that aligns with their preferred lifestyle.
 
-* #### Explore Tools to increase exercise motivation.
+* #### Tools to Enhance Exercise Motivation
 
-By observing on activity trend graph, we found that exercise is not consistent every day of week with Saturday and Tuesday being the most active days. We recommend Custermor to set higher intensity exercise goal on Tuesday and Saturday, and users also can customize their own special warriors day to challenge more active exercise. If our device can connect to local sport event or club event, it will highly motivate users increase exercise.  
+Our activity trend graph reveals that exercise varies throughout the week, with Saturday and Tuesday being the most active days. We recommend customers to set higher intensity exercise goals on these days. Users can also designate their own ‘warrior’ days to challenge themselves with more vigorous exercises. Notifications about local sports events or club activities, or the creation of an exercise social platform, could significantly motivate users to increase their physical activity.
   
-* #### Improve Health alert features
+* #### Enhanced Health Alert Features
 
-As a fitness device,  the abnormal health vital signs alarm function is indispensable, such as a sudden increase in BPM and other health vitals like oxygen level, blood preasure. A feature where the device can contact an emergency hotline or a designated person in case of emergency would be a good value-added service to offer. Healthy lifestyle reminders are also needed， such as move reminder after a longtime sedentary remind, too late sleep remind, and sleep time extreme less remind. 
+As a fitness device, it’s crucial to include an alert function for abnormal health vital signs, such as sudden increases or decrease exceeding normal range in BPM, oxygen level and blood pressure. A feature where the device can contact an emergency hotline or a designated person in case of emergency would be a valuable addition. Reminders promoting a healthy lifestyle are also essential, such as movement reminders after prolonged sedentary periods, late sleep reminders, and alerts for significantly reduced sleep time.
