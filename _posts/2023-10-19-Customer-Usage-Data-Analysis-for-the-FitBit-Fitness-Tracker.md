@@ -591,7 +591,7 @@ We can offer a range of exercise regimens tailored to different user types. By p
 
 * #### Tools to Enhance Exercise Motivation
 
-Our activity trend graph reveals that exercise varies throughout the week, with Saturday and Tuesday being the most active days. We recommend customers to set higher intensity exercise goals on these days. Users can also designate their own ‘warrior’ days to challenge themselves with more vigorous exercises. Notifications about local sports events or club activities, or the creation of an exercise social platform, could significantly motivate users to increase their physical activity.
+Our activity trend graph reveals that exercise varies throughout the week, with Saturday and Tuesday being the most active days. We recommend customers to set higher intensity exercise goals on these days. Users can also designate their own ‘warrior’ days to challenge themselves with more vigorous exercises. Notifications about local sports events or club activities, or the connection with exercise social platforms, could significantly motivate users to increase their physical activity.
   
 * #### Enhanced Health Alert Features
 
