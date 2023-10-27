@@ -596,3 +596,5 @@ Our activity trend graph reveals that exercise varies throughout the week, with 
 * #### Enhanced Health Alert Features
 
 As a fitness device, it’s crucial to include an alert function for abnormal health vital signs, such as sudden increases or decrease exceeding normal range in BPM, oxygen level and blood pressure. A feature where the device can contact an emergency hotline or a designated person in case of emergency would be a valuable addition. Reminders promoting a healthy lifestyle are also essential, such as movement reminders after prolonged sedentary periods, late sleep reminders, and alerts for significantly reduced sleep time.
+
+The souce code used to create this blog can be found [here](https://github.com/Janzhuj/Customer-Usage-Data-Analysis-for-the-FitBit-Fitness-Tracker).
